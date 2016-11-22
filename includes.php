@@ -24,6 +24,6 @@
     <script src="./js/adminactions.js"></script>
     <script src="./js/generatereport.js"></script>
     <script src="./js/viewreport.js"></script>
-    <script src="./js/notif.js"></script>
+    <!-- <script src="./js/notif.js"></script> -->
     <script src="./js/modal-requested-room.js"></script>
     <script src="./js/dataTable.js"></script>

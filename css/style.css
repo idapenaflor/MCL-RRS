@@ -228,3 +228,12 @@ footer{
 
 	margin-top: 20px;
 }
+#dis
+{
+text-align:center;
+height: 25px;
+width: 250px;
+font-size: 15pt;
+/*background-color:#46DAFF;*/
+color:#e01900;
+}
