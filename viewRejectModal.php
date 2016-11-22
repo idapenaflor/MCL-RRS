@@ -11,7 +11,7 @@
 		$output .="
 			<div class='required'>
 	    	<label><h3>Remarks</h3></label><br/>
-	    	<input type='text' name='remarks' class='form-control'>
+	    	<input type='text' name='remarks' class='form-control' required='required'>
 	    	<input type='hidden' name='requestID' value='$requestID'>
 	    	<input type='hidden' name='action' value='$action'>
 			</div>";
