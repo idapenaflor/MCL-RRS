@@ -21,6 +21,8 @@
 
 	$output = '';
 
+	//HELLO IDA OMG
+
 	if($account == 'Staff')
 	{
 		$output = GetStaffNotif($output, $account, $countid, $arrayID, $currentdate, $userid);
