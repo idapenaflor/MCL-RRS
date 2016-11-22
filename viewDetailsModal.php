@@ -16,7 +16,7 @@
 	$deanStyle = '';
 	$cdmoStyle = '';
 	$lmoStyle = '';
-	$req_status = '';
+	$req_status = 'aaa';
 
 	$query1 = mysql_query("select status from requests where requestID='$requestID'");
 
