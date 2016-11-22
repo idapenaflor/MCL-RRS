@@ -1,7 +1,18 @@
+<form action = 'printPermit.php' method='post'>
 <?php
 	include('connects.php');
+	include('log-auth.php');
+
+	$name = $fname . ' ' . $lname;
 
 	$requestID = $_POST['requestID'];
+	$purpose = '';
+	$dateoffiling = '';
+	$dateofuse = '';
+	$room = '';
+	$from = '';
+	$to = '';
+	$time = '';
 	$output = '';
 	$deanAction = '';
 	$cdmoAction = '';
@@ -16,15 +27,21 @@
 	$deanStyle = '';
 	$cdmoStyle = '';
 	$lmoStyle = '';
-	$req_status = 'aaa';
+	$req_status = '';
 
-	$query1 = mysql_query("select status from requests where requestID='$requestID'");
+	$query1 = mysql_query("select * from requests where requestID='$requestID'");
 
 	if(mysql_num_rows($query1)>0)
 	{
 		while($row = mysql_fetch_array($query1))
 		{
-		  $req_status = $row['status'];
+		  	$req_status = $row['status'];	
+		  	$purpose = $row['purpose'];
+			$dateoffiling = $row['dateOfFiling'];
+			$dateofuse = $row['dateOfUse'];
+			$room = $row['room'];
+			$from = $row['timeFrom'];
+			$to = $row['timeTo'];
 		} 
 	}
 
@@ -128,6 +145,19 @@
 	$output .="
 	<p><h3>Additional Equipment</h3></p>";
 
+	$time = $from . ' - ' . $to;
+	$dateoffiling = date('m/d/Y');
+	//HIDDEN VALUES FOR POSTING
+	$output .="
+		<input type='hidden' id='name' name='name' value='$name'/>
+		<input type='hidden' id='dept' name='dept' value='$dept'/>
+		<input type='hidden' id='dateoffiling' name='dateoffiling' value='$dateoffiling'/>
+		<input type='hidden' id='dateofuse' name='dateofuse' value='$dateofuse'/>
+		<input type='hidden' id='purpose' name='purpose' value='$purpose'/>
+		<input type='hidden' id='room' name='room' value='$room'/>
+		<input type='hidden' id='time' name='time' value='$time'/>
+
+	";
 	echo $output;
 
 	include('viewEquipmentModal.php');
@@ -135,7 +165,7 @@
 	if($req_status == 'Approved')
 	{
 		echo "<div class='modal-footer'>
-        <button type='button' class='btn btn-primary' data-dismiss='modal' id='printpermit'>Print Permit</button>
+        <input type='submit' name='print' value='Print Permit' class='btn btn-primary'/>
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
     	 </div>";
 	}
@@ -143,7 +173,8 @@
 	{
 		echo "<div class='modal-footer'>
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
-    	 </div>";
+    	</div>";
 	}
 	
 ?>
+</form>

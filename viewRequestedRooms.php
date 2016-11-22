@@ -187,7 +187,7 @@ function doconfirm()
 
       <div class="modal-header" style="background-color:#428bca;color:white;">
         <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
-        <h4 class="modal-title">Request Detailsssssssssss</h4>
+        <h4 class="modal-title">Request Details</h4>
       </div>
      
       <div class="modal-body" id="request-details">

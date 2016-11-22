@@ -1,3 +1,15 @@
+<?php
+  $name = $_POST['name'];
+  $dept = $_POST['dept'];
+  $time = $_POST['time'];
+  $dateoffiling = $_POST['dateoffiling'];
+  $dateofuse = $_POST['dateofuse'];
+  $purpose = $_POST['purpose'];
+  $room = $_POST['room'];
+
+  
+?>
+
 <html lang='en'>
 
 <head>
@@ -200,11 +212,11 @@
  </tr>
  <tr height=20 style='height:15.0pt;border: none'>
   <td height=20 style='height:15.0pt'></td>
-  <td colspan=17 class=xl128 style='border-right:.5pt solid black'><?php $name; ?></td>
+  <td colspan=17 class=xl128 style='border-right:.5pt solid black'><?php echo $name; ?></td>
   <td style='border-top:none'></td>
-  <td colspan=16 class=xl128 style='border-right:.5pt solid black'>CCIS</td>
+  <td colspan=16 class=xl128 style='border-right:.5pt solid black'><?php echo $dept; ?></td>
   <td></td>
-  <td colspan=7 class=xl164 style='border-right:.5pt solid black'>11/17/2016</td>
+  <td colspan=7 class=xl128 style='border-right:.5pt solid black'><?php echo $dateoffiling; ?></td>
   <td colspan=2 class=xl87 style='mso-ignore:colspan'></td>
   <td></td>
  </tr>
@@ -229,13 +241,13 @@
  <tr height=20 style='height:15.0pt'>
   <td height=20 style='height:15.0pt'></td>
   <td colspan=20 rowspan=2 class=xl156 style='border-right:.5pt solid black;
-  border-bottom:.5pt solid black'>COUNCIL MEETING</td>
+  border-bottom:.5pt solid black'><?php echo $purpose; ?></td>
   <td class=xl78></td>
   <td colspan=13 rowspan=2 class=xl161 style='border-right:.5pt solid black;
-  border-bottom:.5pt solid black'>11/20/2016</td>
+  border-bottom:.5pt solid black'><?php echo $dateofuse; ?></td>
   <td></td>
   <td colspan=6 rowspan=2 class=xl156 style='border-right:.5pt solid black;
-  border-bottom:.5pt solid black'>7:00 AM - 8:30 AM</td>
+  border-bottom:.5pt solid black'><?php echo $time; ?></td>
  </tr>
  <tr height=20 style='height:15.0pt'>
 	<td></td>
@@ -500,7 +512,7 @@
   <td colspan=5 rowspan=2 class=xl121 style='border-right:.5pt solid black'>LECTURE
   ROOM</td>
   <td colspan=8 rowspan=2 class=xl138 style='border-right:.5pt solid black;
-  border-bottom:.5pt solid black'>R200</td>
+  border-bottom:.5pt solid black'><?php echo $room; ?></td>
   <td colspan=3 style='mso-ignore:colspan'></td>
   <td rowspan=2 class=xl136 style='border-bottom:.5pt solid black'>&nbsp;</td>
   <td colspan=5 rowspan=2 class=xl121>CAFÉ ENRIQUE (E200)</td>

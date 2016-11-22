@@ -509,7 +509,8 @@ td
 	border-top:.5pt solid windowtext;
 	border-right:none;
 	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;}
+	border-left:.5pt solid windowtext;
+	padding-left: 5pt}
 .xl129
 	{mso-style-parent:style0;
 	text-align:left;
@@ -824,4 +825,5 @@ td
 	border-top:.5pt solid windowtext;
 	border-right:none;
 	border-bottom:.5pt solid windowtext;
-	border-left:.5pt solid windowtext;}
+	border-left:.5pt solid windowtext;
+	padding-left: 5pt}
