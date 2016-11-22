@@ -1,5 +1,5 @@
 <table class="table table-striped" style="width: auto;text-align:center;z-index:840;">
-    <thead class="tstyle" style="background-color:#3c8dbc;color:white;display:block;border-radius:5px;">
+    <thead class="tstyle" style="background-color:#3c8dbc;color:white;display:block;">
       <center>
         <th style="font-size: 12pt;padding-left:75pt;padding-right: 75pt;text-align:center;">Room Name</th>
         <th style="font-size: 12pt;padding-left:70pt;padding-right: 70pt;text-align:center;">Type</th>
@@ -39,7 +39,15 @@
     $arrayVacantType = array();
     $arrayVacantDesc = array();
 
+    $arrayFinalRoom = array();
+    $arrayFinalType = array();
+    $arrayFinalDesc = array();
+
     $arrayStatus = array();
+
+    $tempRooms = array();
+    $tempFrom = array();
+    $tempTo = array();
 
     if ($from >= $to)
     {
@@ -63,8 +71,6 @@
         while($row = mysql_fetch_array($getRooms))
         {
          $arrayRoom[] = $row['rRoom'];
-         $arrayType[] = $row['rType'];
-         $arrayDesc[] = $row['rdesc'];
        }
      }
 
@@ -74,8 +80,7 @@
 
       for($ctrFrom1 = $from ; $ctrFrom1 < $to ; $ctrFrom1++)
       {
-         // $getStatusQuery = mysql_query("select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'");
-        $getStatusQuery = mysql_query("select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'");
+         $getStatusQuery = mysql_query("select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'");
 
         if(mysql_num_rows($getStatusQuery) > 0)
         {
@@ -93,25 +98,57 @@
       else
       {
         $arrayVacantRoom[] = $arrayRoom[$roomCtr];
-        $arrayVacantType[] = $arrayType[$roomCtr];
-        $arrayVacantDesc[] = $arrayDesc[$roomCtr];
       }
     }
 
-    //echo "<form action='requestRoom.php' method='post'>";
+    $getRequestFromSameDate = mysql_query("select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'");
+
+    if(mysql_num_rows($getRequestFromSameDate) > 0)
+    {
+      while($row = mysql_fetch_array($getRequestFromSameDate))
+      {
+        $tempRooms[] = $row['room'];
+        $tempFrom[] = ConvertToTid($row['timeFrom']);
+        $tempTo[] = ConvertToTid($row['timeTo']);
+      }
+    }
+    
+    for($ctr2=0; $ctr2<count($tempRooms); $ctr2++)
+    {
+      if(($tempFrom[$ctr2] > $from && $tempFrom[$ctr2] < $to) || ($tempTo[$ctr2] > $from && $tempTo[$ctr2] < $to) || ($tempFrom[$ctr2] <= $from && $tempTo[$ctr2] >= $to))
+      {
+        $arrayVacantRoom = array_diff($arrayVacantRoom, array($tempRooms[$ctr2]));
+      }
+    }
+
+    $arrayFinalRoom = array_values($arrayVacantRoom);
+
+    for($ctr=0; $ctr<count($arrayFinalRoom); $ctr++)
+    {
+      $getType = mysql_query("select rType from roomtable where rRoom='$arrayFinalRoom[$ctr]'");
+
+      if(mysql_num_rows($getType) > 0)
+      {
+        while($row = mysql_fetch_array($getType))
+        {
+          $arrayFinalType[] = $row['rType'];
+        }
+      }
+    }
 
       $fromTime = GetFromTime($from);
       $toTime = GetToTime($to);
 
+      echo count($arrayVacantRoom);
+
       echo "<tbody style='height:300pt;display:block;overflow-y:auto'>";
-      for($ctr = 0 ; $ctr < count($arrayVacantRoom) ; $ctr++)
+      for($ctr = 0 ; $ctr < count($arrayFinalRoom) ; $ctr++)
       {
         echo "<tr>";
-        echo "<td style='padding-left:65pt;padding-right: 75pt;text-align:center;'>$arrayVacantRoom[$ctr]</td>";
-        echo "<td style='padding-left:50pt;padding-right:50pt;'>$arrayVacantType[$ctr]</td>";
+        echo "<td style='padding-left:65pt;padding-right: 75pt;text-align:center;'>$arrayFinalRoom[$ctr]</td>";
+        echo "<td style='padding-left:50pt;padding-right:50pt;'>$arrayFinalType[$ctr]</td>";
 
-        //echo "<td style='padding-left:90pt;padding-right:95pt;'><a href='requestRoom.php?room=$arrayVacantRoom[$ctr]&rtype=$arrayVacantType[$ctr]&from=$fromTime&to=$toTime&fromindex=$from&dateofuse=$date&currentdate=$current_date' class='btn-block btn-success'><span class='glyphicon glyphicon-plus view-data' title='Request Room'></span></a></td>";
-        echo "<td style='padding-left:70pt;padding-right:70pt;text-align:center;'><a href='#' class='btn-block btn-success view-data' name='$arrayVacantType[$ctr]' id='$arrayVacantRoom[$ctr]'><span class='glyphicon glyphicon-plus view-data' title='Request Room'></span></a></td>";
+        echo "<td style='padding-left:70pt;padding-right:70pt;text-align:center;'><a href='#' class='btn-block btn-success view-data' name='$arrayFinalType[$ctr]' id='$arrayFinalRoom[$ctr]'><span class='glyphicon glyphicon-plus view-data' title='Request Room'></span></a></td>";
         echo "</tr>";
       }
           echo "</tbody>";
@@ -147,6 +184,20 @@
     }
 
     return $toTime;
+  }
+
+  function ConvertToTid($time)
+  {
+    $getTid = mysql_query("select tID from timetable where tTime = '$time'");
+    if(mysql_num_rows($getTid)>0)
+    {
+      while($row = mysql_fetch_array($getTid))
+      {
+        $time = $row['tID'];
+      }
+    }
+
+    return $time;
   }
 
   ?>
