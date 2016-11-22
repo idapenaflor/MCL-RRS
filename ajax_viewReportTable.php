@@ -25,11 +25,11 @@
 
       if($type == 'LMO')
       {
-        $getRequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.dateOfFiling like '$month%'");
+        $getRequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
       }
       else
       {
-        $getRequests = mysql_query("select * from requests where dateOfFiling like '$month%'");
+        $getRequests = mysql_query("select * from requests where status='Approved' and dateOfFiling like '$month%'");
       }
         if(mysql_num_rows($getRequests) > 0)
         {
@@ -50,25 +50,15 @@
 
         if(count($arrayID) != 0)
         {
-          // $output .="
-          // <table class='table table-hover report-table' id='example1'>
-          //   <th>Request ID</th>
-          //   <th>Department</th>
-          //   <th>Date Filed</th>
-          //   <th>Date of Use</th>
-          //   <th>Room</th>
-          //   <th>Status</th>";
 
           for ($ctr = 0 ; $ctr < count($arrayID) ; $ctr++)
           {
             $output .="
             <tr>
-            <td>$arrayID[$ctr]</td>
             <td>$arrayDept[$ctr]</td>
             <td>$arrayDateFiled[$ctr]</td>
             <td>$arrayDateUse[$ctr]</td>
             <td>$arrayRoom[$ctr]</td>
-            <td>$arrayStatus[$ctr]</td>
             </tr>";
           }
           $output .= "</table>";
