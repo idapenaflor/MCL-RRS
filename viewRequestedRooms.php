@@ -125,7 +125,7 @@
                             //BUTTON FOR CANCEL REQUEST
                             if($arrayStatus[$showDetailsCtr] == "Cancelled" || $arrayStatus[$showDetailsCtr] == "Rejected")
                             {
-                              $output .="<a href='cancelrequest.php?id=$arrayID[$showDetailsCtr]' class='btn-block btn-danger' onClick='return false' disabled=true title='Cancel Request'><i class='fa fa-close'></i></a>";
+                              $output .="<a href='cancelrequest.php?id=$arrayID[$showDetailsCtr]' class='btn-block btn-danger' onClick='return false' disabled=true title='Cancel Request' style='cursor:not-allowed;'><i class='fa fa-close'></i></a>";
                             }
                             else
                             {

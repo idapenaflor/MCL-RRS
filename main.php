@@ -38,7 +38,7 @@
               <div class="row" style="padding-top: 10px;">
                 <div class="col-xs-12">
                   <div class="box">
-                    <div class="box-header">
+                    <div class="box-header" style="background-color: none;">
                       <form method="post" action="">
                         <label id="dis" style="width:250px;"></label><br/><br/>
                         <section class="col-md-3">
