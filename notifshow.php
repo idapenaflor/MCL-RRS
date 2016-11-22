@@ -228,7 +228,7 @@
 	        }
 	    }
 
-	    echo count($arrayID);
+	    //echo count($arrayID);
 	    for($ctr=0; $ctr<count($arrayID); $ctr++)
 	    {
 	    	//QUERY TO GET IF THE NOTIFICATION IS NOTIFIED OR NOT

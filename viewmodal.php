@@ -69,7 +69,7 @@
 
 	    $finalId = array_values($tempId);
 
-	    echo count($finalId);
+	    //echo count($finalId);
 	    for($ctr=0; $ctr<count($finalId); $ctr++)
 	    {
 	    	for($ctr2=0; $ctr2<count($arrayEquipments); $ctr2++)
