@@ -24,6 +24,10 @@
     <script src="./js/adminactions.js"></script>
     <script src="./js/generatereport.js"></script>
     <script src="./js/viewreport.js"></script>
-    <!-- <script src="./js/notif.js"></script> -->
+    <script src="./js/notif.js"></script>
     <script src="./js/modal-requested-room.js"></script>
     <script src="./js/dataTable.js"></script>
+
+    <link rel="stylesheet" href="http://formvalidation.io/vendor/formvalidation/css/formValidation.min.css">
+    <script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
+    <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
