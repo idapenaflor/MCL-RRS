@@ -58,15 +58,7 @@
     <footer class="main-footer">
       <?php include ('footer.php');?>
     </footer>
-  </div><!--end of wrapper-->
-  
-  <!--==========JAVASCRIPT=======-->
-   <!-- <script src="./js/jquery.datetimepicker.full.js"></script>
-    <script src="./js/jquery-2.2.3.min.js"></script>
-      <script src="js/bootstrap.min.js"></script>
-    <script src="./js/app.min.js"></script> -->
-
- 
+  </div><!--end of wrapper--> 
  </body>
 </html>
 <?php
@@ -77,12 +69,16 @@
       $username = $_SESSION['id'];
       $oPass = $_SESSION['password'];
 
-          if($nPass==$cnPass)
+          if($nPass==$cnPass && $nPass!=$oPass)
           {
             $result2 = mysql_query("UPDATE account set password='$nPass' where id='$username' AND password='$oPass'");
 
             echo "<script type='text/javascript'> alert ('Password Successfully Changed');</script>";
             echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
+          }
+          else if($nPass==$oPass)
+          {
+            echo "<script type='text/javascript'> alert ('Old password and new password cannot be the same.');</script>";
           }
           else{
              echo "<script type='text/javascript'> alert ('Password does not match');</script>";

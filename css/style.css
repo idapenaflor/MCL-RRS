@@ -237,3 +237,7 @@ font-size: 15pt;
 /*background-color:#46DAFF;*/
 color:#e01900;
 }
+#dateRangeForm .form-control-feedback {
+    top: 0;
+    right: -15px;
+}
