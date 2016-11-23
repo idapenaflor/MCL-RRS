@@ -6,7 +6,7 @@
                   <span class="glyphicon glyphicon-user"></span>
                 </div>
                 <div class="pull-left info">
-                  <p><?php echo($lname.', '.$fname.' ('.$mname.')'); ?></p>
+                  <p><?php echo($lname.', '.$fname); ?></p>
                 </div>
               </div>
             <ul class="sidebar-menu">

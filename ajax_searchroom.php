@@ -139,7 +139,7 @@
       $fromTime = GetFromTime($from);
       $toTime = GetToTime($to);
 
-      echo count($arrayVacantRoom);
+      //echo count($arrayVacantRoom);
 
       echo "<tbody style='height:300pt;display:block;overflow-y:auto'>";
       for($ctr = 0 ; $ctr < count($arrayFinalRoom) ; $ctr++)
