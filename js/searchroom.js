@@ -9,10 +9,7 @@ $(document).ready(function()
       $('#dis').slideDown().html('<span id="error">Please enter date</span>');
       return false;
     }
-    else if ($("#filterby:checked").length == 0){
-      $('#dis').slideDown().html('<span id="error">Please choose a filter</span>');
-      return false;
-    }
+
     else
     {
       // return true;
