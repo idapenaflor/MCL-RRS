@@ -39,7 +39,7 @@
                 <div class="col-xs-12">
                   <div class="box">
                     <div class="box-header" style="background-color: none;">
-                      <form method="post" action="">
+                      <form method="post" action="" id="eventForm">
                         <label id="dis" style="width:250px;"></label><br/><br/>
                         <section class="col-md-3">
 
@@ -49,7 +49,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:20px;t" required="required"/>
+                              <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:20px;" required="required"/>
                             </div>
                           </div>
                           <span class="label label-primary" style="font-size: 12pt;">Time of Use</span><br/><br/>
@@ -126,7 +126,8 @@
     <script src="./js/searchroom.js"></script> -->
 
    <script>
-    $("#datetimepicker").datetimepicker(
+    $("#datetimepicker")
+    .datetimepicker(
       {
       timepicker:false,
       format: 'm/d/Y',
@@ -137,6 +138,53 @@
         console.log('asd');
        //alert(dateObject);
       }
+    });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#eventForm')
+        .formValidation({
+            framework: 'bootstrap',
+            icon: {
+                valid: 'glyphicon glyphicon-ok',
+                invalid: 'glyphicon glyphicon-remove',
+                validating: 'glyphicon glyphicon-refresh'
+            },
+            fields: {
+                datetimepicker: {
+                    validators: {
+                        notEmpty: {
+                            message: 'The date is required'
+                        },
+                        date: {
+                            format: 'MM/DD/YYYY',
+                            message: 'The date is not a valid',
+                            min: '01/01/2016',
+                            max: '12/30/2050'
+                        }
+                    }
+                }
+            }
+        })
+        .on('success.validator.fv', function(e, data) {
+            if (data.field === 'eventDate' && data.validator === 'date' && data.result.date) {
+                // The eventDate field passes the date validator
+                // We can get the current date as a Javascript Date object
+                var currentDate = data.result.date,
+                    day         = currentDate.getDay();
+
+                // If the selected date is Sunday
+                if (day === 0) {
+                    // Treat the field as invalid
+                    data.fv
+                        .updateStatus(data.field, data.fv.STATUS_INVALID, data.validator)
+                        .updateMessage(data.field, data.validator, 'Please choose a day except Sunday');
+                } else {
+                    // Reset the message
+                    data.fv.updateMessage(data.field, data.validator, 'The date is not valid');
+                }
+            }
+        });
     });
   </script>
  </body>

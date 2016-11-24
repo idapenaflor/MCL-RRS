@@ -17,7 +17,7 @@ function aDrop()
 			else if (uType.value == "CDMO" || uType.value == "LMO")
 			{
 				document.getElementById("Dept").options[0]=new Option("Admin","Admin");
-            }
+      }
 
 }
 function ValidateSelect()

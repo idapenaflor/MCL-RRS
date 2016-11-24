@@ -36,7 +36,7 @@
 		if ($from >= $to)
 		{
 			echo "<script language='javascript'>alert('Please select valid time range');</script>";
-			echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL=Main.php\">";
+			echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL=main.php\">";
 		}
 		else
 		{
