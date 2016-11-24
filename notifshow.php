@@ -184,7 +184,7 @@
 
 		    	$output .="
 					<li $style>
-						<a href=#>
+						<a href='dv-main.php'>
 							<i class='fa fa-user'></i>
 							$arrayDept[$ctr] - New request from $arrayFname[$ctr] $arrayLname[$ctr]
 							<br/>
