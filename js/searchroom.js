@@ -1,8 +1,10 @@
 $(document).ready(function()
 {
+  var searched = false;
   $('#btn-search').click(function(event){
     var filterby=$('#filterby').val();
     var textf = $("#datetimepicker").val();
+
 
     if(textf == '')
     {
@@ -12,10 +14,26 @@ $(document).ready(function()
 
     else
     {
-      // return true;
+      searched = true;
       $('#dis').slideDown().html('<span id="success"></span>');
+      $.ajax({
+        type: 'POST',
+        url: 'ajax_searchroom.php',
+        data: {rtype:$('#hiddenType').val(), from:$('#cmbFrom').val(), to: $('#cmbTo').val(), date:$('#datetimepicker').val()},
+        success: function(res)
+        {
+           $(".table-search").html(res);
+        }
+      });
+    }
+  });
+
+
+      // return true;
+      
       $('.radio-all').click(function(event)
       {
+        $('#dis').slideDown().html('<span id="success"></span>');
         event.preventDefault();
         // var id = $('input#ticketID').val();
         jQuery.ajax({
@@ -26,12 +44,24 @@ $(document).ready(function()
           {
             if (res)
             {
-              $(".table-search").html(res);
-              $("#hiddenType").val("all");
-              $("input[class=radio-all]").prop("checked",true);
-              $("input[class=radio-lecture]").prop("checked",false);
-              $("input[class=radio-lab]").prop("checked",false);
-              $("input[class=radio-outdoor]").prop("checked",false);
+              if(searched)
+              {
+                $(".table-search").html(res);
+                $("#hiddenType").val("all");
+                $("input[class=radio-all]").prop("checked",true);
+                $("input[class=radio-lecture]").prop("checked",false);
+                $("input[class=radio-lab]").prop("checked",false);
+                $("input[class=radio-outdoor]").prop("checked",false);
+              }
+              else
+              {
+                $("#hiddenType").val("all");
+                $("input[class=radio-all]").prop("checked",true);
+                $("input[class=radio-lecture]").prop("checked",false);
+                $("input[class=radio-lab]").prop("checked",false);
+                $("input[class=radio-outdoor]").prop("checked",false);
+              }
+              
             }
           }
         });
@@ -39,6 +69,7 @@ $(document).ready(function()
 
         $('.radio-lecture').click(function(event)
         {
+          $('#dis').slideDown().html('<span id="success"></span>');
           event.preventDefault();
           // var id = $('input#ticketID').val();
           jQuery.ajax({
@@ -48,12 +79,24 @@ $(document).ready(function()
             success: function(res) {
               if (res)
               {
-                $(".table-search").html(res);
-                $("#hiddenType").val("Lecture Room");
-                $("input[class=radio-all]").prop("checked",false);
-                $("input[class=radio-lecture]").prop("checked",true);
-                $("input[class=radio-lab]").prop("checked",false);
-                $("input[class=radio-outdoor]").prop("checked",false);
+                if(searched)
+                {
+                  $(".table-search").html(res);
+                  $("#hiddenType").val("Lecture Room");
+                  $("input[class=radio-all]").prop("checked",false);
+                  $("input[class=radio-lecture]").prop("checked",true);
+                  $("input[class=radio-lab]").prop("checked",false);
+                  $("input[class=radio-outdoor]").prop("checked",false);
+                }
+                else
+                {
+                  $("#hiddenType").val("Lecture Room");
+                  $("input[class=radio-all]").prop("checked",false);
+                  $("input[class=radio-lecture]").prop("checked",true);
+                  $("input[class=radio-lab]").prop("checked",false);
+                  $("input[class=radio-outdoor]").prop("checked",false);
+                }
+                
               }
             }
           });
@@ -61,6 +104,7 @@ $(document).ready(function()
 
          $('.radio-lab').click(function(event)
           {
+            $('#dis').slideDown().html('<span id="success"></span>');
             event.preventDefault();
             // var id = $('input#ticketID').val();
             jQuery.ajax({
@@ -70,18 +114,31 @@ $(document).ready(function()
               success: function(res) {
                 if (res)
                 {
-                  $(".table-search").html(res);
-                  $("#hiddenType").val("Laboratory");
-                  $("input[class=radio-all]").prop("checked",false);
-                  $("input[class=radio-lecture]").prop("checked",false);
-                  $("input[class=radio-lab]").prop("checked",true);
-                  $("input[class=radio-outdoor]").prop("checked",false);
+                  if(searched)
+                  {
+                    $(".table-search").html(res);
+                    $("#hiddenType").val("Laboratory");
+                    $("input[class=radio-all]").prop("checked",false);
+                    $("input[class=radio-lecture]").prop("checked",false);
+                    $("input[class=radio-lab]").prop("checked",true);
+                    $("input[class=radio-outdoor]").prop("checked",false);
+                  }
+                  else
+                  {
+                    $("#hiddenType").val("Laboratory");
+                     $("input[class=radio-all]").prop("checked",false);
+                    $("input[class=radio-lecture]").prop("checked",false);
+                    $("input[class=radio-lab]").prop("checked",true);
+                    $("input[class=radio-outdoor]").prop("checked",false);
+                  }
+                  
                 }
               }
             });
           });
           $('.radio-outdoor').click(function(event)
           {
+            $('#dis').slideDown().html('<span id="success"></span>');
             event.preventDefault();
             // var id = $('input#ticketID').val();
             jQuery.ajax({
@@ -91,17 +148,29 @@ $(document).ready(function()
               success: function(res) {
                 if (res)
                 {
-                  $(".table-search").html(res);
-                  $("#hiddenType").val("Outdoors");
-                  $("input[class=radio-all]").prop("checked",false);
-                  $("input[class=radio-lecture]").prop("checked",false);
-                  $("input[class=radio-lab]").prop("checked",false);
-                  $("input[class=radio-outdoor]").prop("checked",true);
+                  if(searched)
+                  {
+                     $(".table-search").html(res);
+                    $("#hiddenType").val("Outdoors");
+                    $("input[class=radio-all]").prop("checked",false);
+                    $("input[class=radio-lecture]").prop("checked",false);
+                    $("input[class=radio-lab]").prop("checked",false);
+                    $("input[class=radio-outdoor]").prop("checked",true);
+                  }
+                  else
+                  {
+                    $("#hiddenType").val("Outdoors");
+                    $("input[class=radio-all]").prop("checked",false);
+                    $("input[class=radio-lecture]").prop("checked",false);
+                    $("input[class=radio-lab]").prop("checked",false);
+                    $("input[class=radio-outdoor]").prop("checked",true);
+
+                  }
+                 
                 }
               }
             });
           });
-    } //end OF ELSE STATEMENT
-  }); //end of btn search
+
 });
 
