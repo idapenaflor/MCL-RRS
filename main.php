@@ -100,8 +100,7 @@
                               </center>
                             </thead>
                               <?php
-                                include('connects.php');
-                                include('searchRoom.php');
+                                require('searchRoom.php');
                               ?>
                             </table>
                         </section>

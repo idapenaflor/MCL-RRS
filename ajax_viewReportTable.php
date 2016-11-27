@@ -25,15 +25,15 @@
 
       if($type == 'LMO')
       {
-        $getRequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
+        $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
       }
       else
       {
-        $getRequests = mysql_query("select * from requests where status='Approved' and dateOfFiling like '$month%'");
+        $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfFiling like '$month%'");
       }
-        if(mysql_num_rows($getRequests) > 0)
+        if(mysqli_num_rows($getRequests) > 0)
         {
-            while($row = mysql_fetch_array($getRequests))
+            while($row = mysqli_fetch_array($getRequests))
             {
                 $arrayID[] = $row['requestID'];
                 $arrayDept[] = $row['dept'];
