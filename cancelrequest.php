@@ -17,13 +17,13 @@ session_start();
     	echo $username;
     	echo $remarks;
 
-    	mysql_query("UPDATE requests set status='Cancelled' where requesterID='$username' and requestID='$requestID'");
+    	mysqli_query($con,"UPDATE requests set status='Cancelled' where requesterID='$username' and requestID='$requestID'");
 
     	$sql1 = "INSERT into remarks (requestID, type, remarks, rdate) values ('$requestID', 'Cancelled', '$remarks', '$currentdate')";
 
-		if (!mysql_query($sql1, $con))
+		if (!mysqli_query($con,$sql1))
 		{
-			die('Error: ' . mysql_error());
+			die('Error: ' . mysqli_error());
 		}
 		
 		header("location:viewRequestedRooms.php");

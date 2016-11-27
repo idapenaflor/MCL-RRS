@@ -1,5 +1,5 @@
 <?php 
-include('connects.php');
+require('connects.php');
 session_start();
     $username = "";
     if (isset($_SESSION['id']))
@@ -26,7 +26,7 @@ session_start();
 
         echo $actioncol;
         echo $datecol;
-        echo $roomtype;
+        //echo $roomtype;
 
         
         if($type=='Dean')
@@ -35,13 +35,13 @@ session_start();
             {
                 $action = 'Endorsed';
 
-                mysql_query("UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
+                mysqli_query($con,"UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
 
-                $getlmo = mysql_query("select lmoAction from action where requestID='$requestID'");
+                $getlmo = mysqli_query($con,"select lmoAction from action where requestID='$requestID'");
 
-                if(mysql_num_rows($getlmo) > 0)
+                if(mysqli_num_rows($getlmo) > 0)
                 {
-                    while($row = mysql_fetch_array($getlmo))
+                    while($row = mysqli_fetch_array($getlmo))
                     {
                         $getlmoaction = $row['lmoAction'];
                     }
@@ -51,17 +51,17 @@ session_start();
                 if($getlmoaction == 'N/A')
                 {
                     $notif = "INSERT into notification values ('$requestID', 'cdmo', '0')";
-                    if (!mysql_query($notif, $con))
+                    if (!mysqli_query($con,$notif))
                     {
-                        die('Error: ' . mysql_error());
+                        die('Error: ' . mysqli_error());
                     }
                 }
                 else
                 {
                     $notif = "INSERT into notification values ('$requestID', 'lmo', '0')";
-                    if (!mysql_query($notif, $con))
+                    if (!mysqli_query($con,$notif))
                     {
-                        die('Error: ' . mysql_error());
+                        die('Error: ' . mysqli_error());
                     }
                 }
                 
@@ -70,9 +70,9 @@ session_start();
         else if($type=='CDMO')
         {
             $notif = "INSERT into notification values ('$requestID', 'staff', '0')";
-                if (!mysql_query($notif, $con))
+                if (!mysqli_query($con,$notif))
                 {
-                    die('Error: ' . mysql_error());
+                    die('Error: ' . mysqli_error());
                 }
         }
 
@@ -81,34 +81,34 @@ session_start();
         {
             if($type=='CDMO')
             {
-               mysql_query("UPDATE requests set status='$action' where requestID='$requestID'");
+               mysqli_query($con,"UPDATE requests set status='$action' where requestID='$requestID'");
             }
             else if($type=='LMO')
             {
                 $notif = "INSERT into notification values ('$requestID', 'cdmo', '0')";
-                if (!mysql_query($notif, $con))
+                if (!mysqli_query($con,$notif))
                 {
-                    die('Error: ' . mysql_error());
+                    die('Error: ' . mysqli_error());
                 }
             }
-            mysql_query("UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
+            mysqli_query("UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
         }
         else if($action == 'Rejected')
         {
-            mysql_query("UPDATE requests set status='$action' where requestID='$requestID'");
-            mysql_query("UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
+            mysqli_query($con,"UPDATE requests set status='$action' where requestID='$requestID'");
+            mysqli_query($con,"UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
 
             $sql1 = "INSERT into remarks (requestID, type, remarks, rdate) values ('$requestID', '$action', '$remarks', '$currentdate')";
 
-            if (!mysql_query($sql1, $con))
+            if (!mysqli_query($con,$sql1))
             {
-                die('Error: ' . mysql_error());
+                die('Error: ' . mysqli_error());
             }
 
             $notif = "INSERT into notification values ('$requestID', 'staff', '0')";
-            if (!mysql_query($notif, $con))
+            if (!mysqli_query($con,$notif))
             {
-                die('Error: ' . mysql_error());
+                die('Error: ' . mysqli_error());
             }
         }
         

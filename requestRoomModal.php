@@ -35,11 +35,11 @@ $lmo = 'Pending';
       {
         $arrayEquipment[] = $equipment;
 
-        $query = mysql_query("select * from equipment where ename='$equipment'");
+        $query = mysqli_query($con,"select * from equipment where ename='$equipment'");
 
-        if(mysql_num_rows($query)>0)
+        if(mysqli_num_rows($query)>0)
         {
-          while($row = mysql_fetch_array($query))
+          while($row = mysqli_fetch_array($query))
           {
             $arrayEdept[] = $row['edept'];
           } 
@@ -68,18 +68,18 @@ $lmo = 'Pending';
     //QUERY TO INSERT REQUEST DETAILS IN REQUESTS TABLE
     $sql1 = "INSERT into requests (requesterID, dept, dateoffiling, purpose, dateofuse, timeFrom, timeTo, room, status, isExpired) values ('$username', '$dept', '$currentdate', '$purpose', '$dateofuse', '$fromTime', '$toTime', '$room', 'Pending', '0')";
 
-    if (!mysql_query($sql1, $con))
+    if (!mysqli_query($con,$sql1))
     {
-      die('Error: ' . mysql_error());
+      die('Error: ' . mysqli_error());
     }
     else
     {
       //QUERY TO GET THE REQUEST ID OF THE LATEST REQUEST OF THE USER
-      $sql2 = mysql_query("SELECT requestID FROM requests where requesterID='$username' ORDER BY requestID DESC LIMIT 1");
+      $sql2 = mysqli_query($con,"SELECT requestID FROM requests where requesterID='$username' ORDER BY requestID DESC LIMIT 1");
 
-      if(mysql_num_rows($sql2)>0)
+      if(mysqli_num_rows($sql2)>0)
       {
-        while($row = mysql_fetch_array($sql2))
+        while($row = mysqli_fetch_array($sql2))
         {
           $requestID = $row['requestID'];
         } 
@@ -88,9 +88,9 @@ $lmo = 'Pending';
       //QUERY TO INSERT THE EQUIPMENT TO THE EQUIPMENTREQUEST TABLE
       $sql3 = "INSERT into action (requestID, deanAction, cdmoAction, lmoAction) values ('$requestID', '$dean', '$cdmo', '$lmo')";
 
-      if (!mysql_query($sql3, $con))
+      if (!mysqli_query($con,$sql3))
       {
-        die('Error: ' . mysql_error());
+        die('Error: ' . mysqli_error());
       }
 
       //QUERY TO INSERT THE EQUIPMENT TO THE EQUIPMENTREQUEST TABLE
@@ -98,18 +98,18 @@ $lmo = 'Pending';
       {
         $sql4 = "INSERT into equipmentrequest (requestID, ename, qty) values ('$requestID', '$arrayEquipment[$ctr]', '$arrayQty[$ctr]')";
 
-        if (!mysql_query($sql4, $con))
+        if (!mysqli_query($con,$sql4))
         {
-          die('Error: ' . mysql_error());
+          die('Error: ' . mysqli_error());
         }
       }
 
       //QUERY TO INSERT THE REQUEST TO THE NOTIFICATION TABLE
       $sql4 = "INSERT into notification values ('$requestID', 'dean', '0')";
 
-      if (!mysql_query($sql4, $con))
+      if (!mysqli_query($con,$sql4))
       {
-        die('Error: ' . mysql_error());
+        die('Error: ' . mysqli_error());
       }
       
       echo "<script language='javascript'>alert('Request Successful! Redirecting you back to main page.');</script>";

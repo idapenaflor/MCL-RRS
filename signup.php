@@ -4,7 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content-="width=device-width initial-scale=1">
     <title>MCL Room Reservation</title>
-    <?php include('includes.php'); ?>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <script src="./js/dropdown.js"></script>
   </head>
 
   <body>
@@ -20,13 +23,7 @@
 	<div id="parentDiv">
 		 <div class="container">
 		 		<div class="row" style="margin-top: 40px;">
-			 		<div id="align">
-			 			<div class="col-xs-6 col-md-6" style="padding-left:0px;"">
-			 				<img src="./img/title.png" width="600px" height="250px" style="margin-top: 50px;padding-right: 50px;">
-				 		</div>
-			 		</div>
 					
-					<div class="col-xs-6 col-md-6">
 						<div class="panel" id="sign-up">
 								
 									<div class="input-group">
@@ -60,13 +57,11 @@
 								</form>
 								</div><!--end of div-->
 						</div> <!--end of panel-->
-					</div> <!-- end of col -->
 				</div>
 		
 		 </div><!--end of class container-->
 	</div>
 	<footer>© 2016 All Rights Reserved</footer>
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
       <script    src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
       <script src="js/bootstrap.min.js"></script>
   </body>
@@ -75,7 +70,7 @@
 <!--PHP CODESSSSSSSSSSSSSS-->
 	<?php
 
-		include('connects.php');
+		require('connects.php');
 
 			if (isset($_POST['btnSubmit']))
 			{					
@@ -93,15 +88,15 @@
 					$department = $_POST['Dept'];
 
 
-					$result = mysql_query("SELECT * FROM account WHERE id = '$username'");
+					$result = mysqli_query($con,"SELECT * FROM account WHERE id = '$username'");
 
-					if(!$row = mysql_fetch_assoc($result))
+					if(!$row = mysqli_fetch_assoc($result))
 					{
 						$sql1="INSERT INTO account VALUES('$username','$password', '$utype', '$fname', '$lname', '$mname', '$department')";
 
-						if (!mysql_query($sql1,$con))
+						if (!mysqli_query($con,$sql1))
 						{
-						  die('Error: ' . mysql_error());
+						  die('Error: ' . mysqli_error());
 						}
 						//TURN IT BACK TO LOGIN PAGE
 				        echo "<script language='javascript'>alert('Sign up successful! Redirecting you back to log in page.');</script>";
@@ -112,7 +107,7 @@
 						echo "<script type='text/javascript'> alert ('Username already existing');</script>";
 					} //end of else
 
-					mysql_close($con);
+					mysqli_close($con);
 				}//end of == pass
 				else{
 					echo "<script type='text/javascript'> alert ('Password does not match');</script>";

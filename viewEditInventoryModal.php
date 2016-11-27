@@ -1,5 +1,5 @@
 <?php
-	include('connects.php');
+	require('connects.php');
 
 	$equipID = $_GET['equipID'];
 	$output = '';
@@ -10,11 +10,11 @@
 	$modified = '';
 
 
-	$getEquipment = mysql_query("select * from equipment where eid='$equipID'");
+	$getEquipment = mysqli_query($con,"select * from equipment where eid='$equipID'");
 	
-	if(mysql_num_rows($getEquipment) > 0)
+	if(mysqli_num_rows($getEquipment) > 0)
 	{
-	  while($row = mysql_fetch_array($getEquipment))
+	  while($row = mysqli_fetch_array($getEquipment))
 	  {
 	     $id = $row['eid'];
 	     $ename = $row['ename'];

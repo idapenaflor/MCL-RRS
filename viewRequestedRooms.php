@@ -10,7 +10,7 @@
 
   <body class="hold-transition sidebar-mini">
      <?php
-      include('connects.php');
+      require('connects.php');
       include('log-auth.php');
     ?>
   <div class="wrapper">
@@ -63,11 +63,11 @@
                             $username = $_SESSION['id'];
                           }
 
-                            $getRequests = mysql_query("select * from requests where requesterID='$username'");
+                            $getRequests = mysqli_query($con,"select * from requests where requesterID='$username'");
 
-                              if(mysql_num_rows($getRequests) > 0)
+                              if(mysqli_num_rows($getRequests) > 0)
                               {
-                                while($row = mysql_fetch_array($getRequests))
+                                while($row = mysqli_fetch_array($getRequests))
                                 {
                                   if($row['isExpired'] != '1')
                                   {

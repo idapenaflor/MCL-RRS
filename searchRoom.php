@@ -41,10 +41,11 @@
 		else
 		{
 			//GET ALL ROOMS OF SAME TYPE
-		    $getRooms = mysql_query("select * from roomtable");
-		    if(mysql_num_rows($getRooms) > 0)
+			$qASelect = "select * from roomtable";
+		    $getRooms = mysqli_query($con,$qASelect);
+		    if(mysqli_num_rows($getRooms) > 0)
 		    {
-		        while($row = mysql_fetch_array($getRooms))
+		        while($row = mysqli_fetch_array($getRooms))
 		        {
 		           $arrayRoom[] = $row['rRoom'];
 			       $arrayType[] = $row['rType'];
@@ -58,11 +59,12 @@
 
 		        for($ctrFrom1 = $from ; $ctrFrom1 < $to ; $ctrFrom1++)
 		        {
-		           	$getStatusQuery = mysql_query("select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'");
+		        	$qSched = "select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'";
+		           	$getStatusQuery = mysqli_query($con,$qSched);
 
-		           	if(mysql_num_rows($getStatusQuery) > 0)
+		           	if(mysqli_num_rows($getStatusQuery) > 0)
 		           	{
-		            	while($row = mysql_fetch_array($getStatusQuery))
+		            	while($row = mysqli_fetch_array($getStatusQuery))
 		             	{
 		               		$arrayTemp[] = $row['rStatus'];
 		            	}
@@ -103,11 +105,12 @@
 	//FUNCTIONS HERE
 	function GetFromTime($from) //get start time
 	{
-   		$getFromTime = mysql_query("select tTime from timetable where tid = $from");
+		$qGetFrom = "select tTime from timetable where tid = '$from'";
+   		$getFromTime = mysqli_query($con,$qGetFrom);
 
-        if(mysql_num_rows($getFromTime)>0)
+        if(mysqli_num_rows($getFromTime)>0)
         {
-	        while($row = mysql_fetch_array($getFromTime))
+	        while($row = mysqli_fetch_array($getFromTime))
 	        {
 	        	$fromTime = $row['tTime'];
 	        }	
@@ -119,10 +122,11 @@
 	function GetToTime($to) //get end time
 	{
 		$toTime = "";
-		$getToTime = mysql_query("select tTime from timetable where tid = $to");
-	        if(mysql_num_rows($getToTime)>0)
+		$qGetTo = "select tTime from timetable where tid = '$to'";
+		$getToTime = mysqli_query($con,$qGetTo);
+	        if(mysqli_num_rows($getToTime)>0)
 	        {
-		        while($row = mysql_fetch_array($getToTime))
+		        while($row = mysqli_fetch_array($getToTime))
 		        {
 		        	$toTime = $row['tTime'];
 		        }

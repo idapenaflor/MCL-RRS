@@ -11,7 +11,7 @@
 
 	echo $currentdate;
 	echo $onhand;
-	mysql_query("UPDATE equipment set ename='$ename', qty='$qty', onhand='$onhand', modified='$currentdate' where eid='$id'");
+	mysqli_query("UPDATE equipment set ename='$ename', qty='$qty', onhand='$onhand', modified='$currentdate' where eid='$id'");
 	//header('Location: http://localhost/mclrrs/viewInventory.php');
 	header("location:viewInventory.php");
 ?>

@@ -10,8 +10,8 @@
 
   <body class="hold-transition sidebar-mini">
      <?php
-      include('connects.php');
-      include('log-auth.php');
+      require('connects.php');
+      require('log-auth.php');
     ?>
     <div class="wrapper">
   <header class="main-header">
@@ -64,10 +64,10 @@
                         $output = '';
                         $arrayID = array();
 
-                        $getEquipment = mysql_query("select * from equipment where edept='$type'");
-                        if(mysql_num_rows($getEquipment) > 0)
+                        $getEquipment = mysqli_query($con,"select * from equipment where edept='$type'");
+                        if(mysqli_num_rows($getEquipment) > 0)
                         {
-                            while($row = mysql_fetch_array($getEquipment))
+                            while($row = mysqli_fetch_array($getEquipment))
                             {
                                $arrayID[] = $row['eid'];
                                $arrayEname[] = $row['ename'];

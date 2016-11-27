@@ -5,7 +5,7 @@
 
 	if(isset($_POST['rroom']))
 	{
-		include('connects.php');
+		require('connects.php');
 
 		$output = '';
 
@@ -16,8 +16,8 @@
 		$date = $_POST['date'];
 
 		//DINAGDAG NI IDA 11/04
-		$fromTime = GetFromTime($from);
-		$toTime = GetToTime($to);
+		$fromTime = GetFromTime($con,$from);
+		$toTime = GetToTime($con,$to);
 
 		$arrayEquipments = array();
 		$arrayQty = array();
@@ -30,11 +30,12 @@
 	    $finalId = array();
 
 		//GET ALL EQUIPMENT AND QTY
-		$query = mysql_query("select * from equipment");
+		$qGetAll = "select * from equipment";
+		$query = mysqli_query($con,$qGetAll);
 
-		if(mysql_num_rows($query)>0)
+		if(mysqli_num_rows($query)>0)
 	    {
-	      while($row = mysql_fetch_array($query))
+	      while($row = mysqli_fetch_array($query))
 	      {
 	        $arrayEquipments[] = $row['ename'];
 	        $arrayQty[] = $row['qty'];
@@ -42,15 +43,15 @@
 	    }
 
 	    //GET REQUESTS ID OF REQUEST WITH SIMILAR DATE OF USE
-	    $queryGetSimilarRequest = mysql_query("select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'");
+	    $queryGetSimilarRequest = mysqli_query($con,"select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'");
 
-		if(mysql_num_rows($queryGetSimilarRequest)>0)
+		if(mysqli_num_rows($queryGetSimilarRequest)>0)
 	    {
-	      while($row = mysql_fetch_array($queryGetSimilarRequest))
+	      while($row = mysqli_fetch_array($queryGetSimilarRequest))
 	      {
 	        $tempId[] = $row['requestID'];
-	        $tempFrom[] = ConvertToTid($row['timeFrom']);
-        	$tempTo[] = ConvertToTid($row['timeTo']);
+	        $tempFrom[] = ConvertToTid($con,$row['timeFrom']);
+        	$tempTo[] = ConvertToTid($con,$row['timeTo']);
 	      } 
 	    }
 
@@ -74,11 +75,11 @@
 	    {
 	    	for($ctr2=0; $ctr2<count($arrayEquipments); $ctr2++)
 	    	{
-	    		$query = mysql_query("select * from equipmentrequest where requestID='$finalId[$ctr]' and ename='$arrayEquipments[$ctr2]'");
+	    		$query = mysqli_query($con,"select * from equipmentrequest where requestID='$finalId[$ctr]' and ename='$arrayEquipments[$ctr2]'");
 
-		    	if(mysql_num_rows($query)>0)
+		    	if(mysqli_num_rows($query)>0)
 			    {
-			      while($row = mysql_fetch_array($query))
+			      while($row = mysqli_fetch_array($query))
 			      {
 			        $arrayQty[$ctr2] = $arrayQty[$ctr2] - $row['qty'];
 			      } 
@@ -167,13 +168,13 @@
 <!-- DINAGDAG NI IDA 11/04, ALISIN NA UNG FUNCTIONS FROM AJAX_SEARCHROOM-->
 <?php
 	//FUNCTIONS HERE
-  function GetFromTime($from) //get start time
+  function GetFromTime($con,$from) //get start time
   {
-    $getFromTime = mysql_query("select tTime from timetable where tid = $from");
+    $getFromTime = mysqli_query($con,"select tTime from timetable where tid = '$from'");
 
-    if(mysql_num_rows($getFromTime)>0)
+    if(mysqli_num_rows($getFromTime)>0)
     {
-      while($row = mysql_fetch_array($getFromTime))
+      while($row = mysqli_fetch_array($getFromTime))
       {
         $fromTime = $row['tTime'];
       } 
@@ -182,13 +183,13 @@
     return $fromTime;
   }
 
-  function GetToTime($to) //get end time
+  function GetToTime($con,$to) //get end time
   {
     $toTime = "";
-    $getToTime = mysql_query("select tTime from timetable where tid = $to");
-    if(mysql_num_rows($getToTime)>0)
+    $getToTime = mysqli_query($con,"select tTime from timetable where tid = '$to'");
+    if(mysqli_num_rows($getToTime)>0)
     {
-      while($row = mysql_fetch_array($getToTime))
+      while($row = mysqli_fetch_array($getToTime))
       {
         $toTime = $row['tTime'];
       }
@@ -197,12 +198,12 @@
     return $toTime;
   }
 
-  function ConvertToTid($time)
+  function ConvertToTid($con,$time)
   {
-    $getTid = mysql_query("select tID from timetable where tTime = '$time'");
-    if(mysql_num_rows($getTid)>0)
+    $getTid = mysqli_query($con,"select tID from timetable where tTime = '$time'");
+    if(mysqli_num_rows($getTid)>0)
     {
-      while($row = mysql_fetch_array($getTid))
+      while($row = mysqli_fetch_array($getTid))
       {
         $time = $row['tID'];
       }

@@ -51,16 +51,19 @@
   </body>
 </html>
 <?php
-include_once('connects.php');
+require('connects.php');
 
 if (isset($_POST['btnLogin']))
 {
 	$username = $_POST['txtUser'];
 	$password = md5($_POST['txtPass']);
+	$type = "";
+	$dept = "";
 
-	$result = mysql_query("SELECT * FROM account WHERE id = '$username' AND password = '$password'");
+	$query = "SELECT * FROM account WHERE id = '$username' AND password = '$password'";
+	$result = mysqli_query($con,$query);
 
-	while($row = mysql_fetch_array($result))
+	while($row = mysqli_fetch_array($result))
           {
              $type = $row['type'];
              $dept = $row['dept'];
@@ -83,7 +86,7 @@ if (isset($_POST['btnLogin']))
     	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
     	header("location:main.php");
     }
-    else if(!$row = mysql_fetch_assoc($result)){
+    else if(!$row = mysqli_fetch_assoc($result)){
     	session_destroy();
 	 	echo "<script type='text/javascript'> alert ('Incorrect username and/or password.');</script>";
     }
@@ -93,5 +96,5 @@ else{
 	
 }
 
-	mysql_close($con);
+	mysqli_close($con);
 ?>

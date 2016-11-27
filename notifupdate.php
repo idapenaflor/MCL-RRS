@@ -1,7 +1,7 @@
 <?php
-	include('connects.php');
+	require('connects.php');
 
 	$account = $_POST['account'];
 
-	mysql_query("UPDATE notification set isNotified='1' where account='$account'");
+	mysqli_query($con,"UPDATE notification set isNotified='1' where account='$account'");
 ?>

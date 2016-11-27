@@ -10,7 +10,7 @@
 
   <body class="hold-transition sidebar-mini">
      <?php
-      include('connects.php');
+      require('connects.php');
       include('log-auth.php');
 
       $arrayID = array();
@@ -58,20 +58,20 @@
 
                           if($type == 'Dean')
                           {
-                            $getrequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Pending' and requests.dept='$dept' and requests.isExpired=0");
+                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Pending' and requests.dept='$dept' and requests.isExpired=0");
                           }
                           else if($type == 'LMO')
                           {
-                            $getrequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.lmoAction='Pending' and requests.isExpired=0");
+                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.lmoAction='Pending' and requests.isExpired=0");
                           }
                           else if($type == 'CDMO')
                           {
-                            $getrequests = mysql_query("select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='N/A' or requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='Approved' and requests.isExpired=0");
+                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='N/A' or requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='Approved' and requests.isExpired=0");
                           }
 
-                          if(mysql_num_rows($getrequests) > 0)
+                          if(mysqli_num_rows($getrequests) > 0)
                           {
-                              while($row = mysql_fetch_array($getrequests))
+                              while($row = mysqli_fetch_array($getrequests))
                               {
                                  $arrayID[] = $row['requestID'];
                                  $arrayRequester[] = $row['requesterID'];
@@ -107,10 +107,10 @@
 
                           for($ctr=0; $ctr<count($arrayRequester); $ctr++)
                           {
-                            $getnames = mysql_query("select * from account join requests on account.id=requests.requesterID where requests.requesterID='$arrayRequester[$ctr]'");
-                            if(mysql_num_rows($getnames) > 0)
+                            $getnames = mysqli_query($con,"select * from account join requests on account.id=requests.requesterID where requests.requesterID='$arrayRequester[$ctr]'");
+                            if(mysqli_num_rows($getnames) > 0)
                             {
-                                while($row = mysql_fetch_array($getnames))
+                                while($row = mysqli_fetch_array($getnames))
                                 {
                                    $arrayLname[] = $row['lname'];
                                    $arrayFname[] = $row['fname'];

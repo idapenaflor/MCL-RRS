@@ -7,11 +7,11 @@
 
   $requestID = $_POST['requestID'];
 
-  $query = mysql_query("select * from equipmentrequest where requestID='$requestID'");
+  $query = mysqli_query($con,"select * from equipmentrequest where requestID='$requestID'");
 
-  if(mysql_num_rows($query)>0)
+  if(mysqli_num_rows($query)>0)
   {
-    while($row = mysql_fetch_array($query))
+    while($row = mysqli_fetch_array($query))
     {
       $arrayEquipments[] = $row['ename'];
       $arrayQty[] = $row['qty'];
