@@ -282,7 +282,7 @@ class PDF extends FPDF
     $check = "4"; else $check = ""; //4 kasi sya yung checkbox
 
   //====================ADMINISTRATIVE OFFICE================
-    $aRooms = array('JP Rizal Hall Lobby', 'JP Rizal Hall Air Well', 'Track Oval', 'Basketball Court', 'Volleyball Court', 'ET Yunchengco Hall Lobby', 'Shannon Drive', 'Einstein Drive');
+    $aRooms = array('JP RIZAL HALL LOBBY', 'JP RIZAL HALL AIR WELL', 'TRACK OVAL', 'BASKETBALL COURT', 'VOLLEYBALL COURT', 'ET YUNCHENGCO HALL LOBBY', 'SHANNON DRIVE', 'EINSTEIN DRIVE');
 
     $pXaxis1 = 17;
     $pYaxis1 = 92;
