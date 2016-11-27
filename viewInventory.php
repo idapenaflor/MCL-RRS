@@ -49,7 +49,7 @@
                     <table id="example1" class="table table-bordered table-hover">
                       <thead>
                         <tr>
-                          <th>Equipment ID</th>
+                          <!-- <th>Equipment ID</th> -->
                           <th>Equipment</th>
                           <th>Quantity</th>
                           <th>On Hand</th>
@@ -87,7 +87,7 @@
                             $output .="
 
                               <tr>
-                              <td>$arrayID[$ctr]</td>
+                              
                               <td>$arrayEname[$ctr]</td>
                               <td>$arrayQty[$ctr]</td>
                               <td>$arrayOnhand[$ctr]</td>
