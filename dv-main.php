@@ -104,7 +104,7 @@
 
                           for($ctr=0; $ctr<count($arrayRequester); $ctr++)
                           {
-                            $getnames = mysqli_query($con,"select * from account join requests on account.id=requests.requesterID where requests.requesterID='$arrayRequester[$ctr]'");
+                            $getnames = mysqli_query($con,"select * from account where id='$arrayRequester[$ctr]'");
                             if(mysqli_num_rows($getnames) > 0)
                             {
                                 while($row = mysqli_fetch_array($getnames))
