@@ -1,5 +1,5 @@
 <?php
-	include('connects.php');
+	require('connects.php');
 	session_start();
 
 	$arrayID[] = array();
@@ -9,20 +9,20 @@
 
     if($type=='Dean')
     {
-	   $getNotifs = mysql_query("select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.dept='$dept'");
+	   $getNotifs = mysqli_query($con,"select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.dept='$dept'");
     }
     else if($type=='Staff')
     {
-        $getNotifs = mysql_query("select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.requesterID='$userid'");
+        $getNotifs = mysqli_query($con,"select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.requesterID='$userid'");
     }
     else
     {
-        $getNotifs = mysql_query("select * from notification where isNotified='0' and account='$type'");
+        $getNotifs = mysqli_query($con,"select * from notification where isNotified='0' and account='$type'");
     }
 
-	if(mysql_num_rows($getNotifs) > 0)
+	if(mysqli_num_rows($getNotifs) > 0)
     {
-        while($row = mysql_fetch_array($getNotifs))
+        while($row = mysqli_fetch_array($getNotifs))
         {
             $arrayID[] = $row['requestID'];
         }

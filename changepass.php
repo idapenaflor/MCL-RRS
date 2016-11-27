@@ -10,7 +10,7 @@
 
   <body class="hold-transition sidebar-mini">
      <?php
-      include('connects.php');
+      require('connects.php');
       include('log-auth.php');
     ?>
   <div class="wrapper">
@@ -43,8 +43,9 @@
                   <div class="input-group">
                     <div class="area1">
                     <form action="changepass.php" method="post">
+                      <input type="password" class="form-control" placeholder="Old Password" aria-describedby="basic-addon1" name="txtOPass" id="txtOPass" required="required"> <br/> <br/>
                       <input type="password" class="form-control" placeholder="New Password" aria-describedby="basic-addon1" name="txtNPass" id="txtNPass" required="required" pattern=".{6,}" title="Enter 6 or more characters"> <br/><br/>
-                      <input type="password" class="form-control" placeholder="Confirm New Password" aria-describedby="basic-addon1" name="txtCPass" id="txtCPass" required="required" pattern=".{6,}" title="Enter 6 or more characters">
+                      <input type="password" class="form-control" placeholder="Confirm New Password" aria-describedby="basic-addon1" name="txtCPass" id="txtCPass" required="required">
                       <br/> <br/>
                       <center>
                       <input type="submit" class="btn btn-success" name="btnChange" value="Submit" style="margin-top: 15px;" />
@@ -64,21 +65,22 @@
 <?php
     if(isset($_POST['btnChange']))
     {
+      $oTPass = md5($_POST['txtOPass']);
       $nPass = md5($_POST['txtNPass']);
       $cnPass = md5($_POST['txtCPass']);
       $username = $_SESSION['id'];
       $oPass = $_SESSION['password'];
 
-          if($nPass==$cnPass && $nPass!=$oPass)
+          if($nPass==$cnPass && $nPass!=$oPass && $oTPass==$oPass)
           {
-            $result2 = mysql_query("UPDATE account set password='$nPass' where id='$username' AND password='$oPass'");
+            $result2 = mysqli_query($con,"UPDATE account set password='$nPass' where id='$username' AND password='$oPass'");
 
             echo "<script type='text/javascript'> alert ('Password Successfully Changed');</script>";
             echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
           }
-          else if($nPass==$oPass)
+          else if($nPass==$oTPass)
           {
-            echo "<script type='text/javascript'> alert ('Old password and new password cannot be the same.');</script>";
+            echo "<script type='text/javascript'> alert ('Incorrect Password');</script>";
           }
           else{
              echo "<script type='text/javascript'> alert ('Password does not match');</script>";

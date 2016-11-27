@@ -59,16 +59,18 @@
       //GET ALL ROOMS OF SAME TYPE
       if($rtype == "all")
       {
-       $getRooms = mysql_query("select * from roomtable"); 
+        $qAGet = "select * from roomtable";
+       $getRooms = mysqli_query($con,$qAGet); 
       }
       else
       {
-       $getRooms = mysql_query("select * from roomtable where rtype = '$rtype'"); 
+        $qGetRooms = "select * from roomtable where rtype = '$rtype'";
+       $getRooms = mysqli_query($con,$qGetRooms); 
       }
 
-      if(mysql_num_rows($getRooms) > 0)
+      if(mysqli_num_rows($getRooms) > 0)
       {
-        while($row = mysql_fetch_array($getRooms))
+        while($row = mysqli_fetch_array($getRooms))
         {
          $arrayRoom[] = $row['rRoom'];
        }
@@ -80,11 +82,12 @@
 
       for($ctrFrom1 = $from ; $ctrFrom1 < $to ; $ctrFrom1++)
       {
-         $getStatusQuery = mysql_query("select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'");
+         $qGetStat = "select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'";
+         $getStatusQuery = mysqli_query($con,$qGetStat);
 
-        if(mysql_num_rows($getStatusQuery) > 0)
+        if(mysqli_num_rows($getStatusQuery) > 0)
         {
-          while($row = mysql_fetch_array($getStatusQuery))
+          while($row = mysqli_fetch_array($getStatusQuery))
           {
             $arrayTemp[] = $row['rStatus'];
           }
@@ -101,15 +104,16 @@
       }
     }
 
-    $getRequestFromSameDate = mysql_query("select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'");
+    $qGetRequest = "select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'";
+    $getRequestFromSameDate = mysqli_query($con,$qGetRequest);
 
-    if(mysql_num_rows($getRequestFromSameDate) > 0)
+    if(mysqli_num_rows($getRequestFromSameDate) > 0)
     {
-      while($row = mysql_fetch_array($getRequestFromSameDate))
+      while($row = mysqli_fetch_array($getRequestFromSameDate))
       {
         $tempRooms[] = $row['room'];
-        $tempFrom[] = ConvertToTid($row['timeFrom']);
-        $tempTo[] = ConvertToTid($row['timeTo']);
+        $tempFrom[] = ConvertToTid($con,$row['timeFrom']);
+        $tempTo[] = ConvertToTid($con,$row['timeTo']);
       }
     }
     
@@ -125,19 +129,20 @@
 
     for($ctr=0; $ctr<count($arrayFinalRoom); $ctr++)
     {
-      $getType = mysql_query("select rType from roomtable where rRoom='$arrayFinalRoom[$ctr]'");
+      $qGetType = "select rType from roomtable where rRoom='$arrayFinalRoom[$ctr]'";
+      $getType = mysqli_query($con,$qGetType);
 
-      if(mysql_num_rows($getType) > 0)
+      if(mysqli_num_rows($getType) > 0)
       {
-        while($row = mysql_fetch_array($getType))
+        while($row = mysqli_fetch_array($getType))
         {
           $arrayFinalType[] = $row['rType'];
         }
       }
     }
 
-      $fromTime = GetFromTime($from);
-      $toTime = GetToTime($to);
+      $fromTime = GetFromTime($con,$from);
+      $toTime = GetToTime($con,$to);
 
       //echo count($arrayVacantRoom);
 
@@ -156,13 +161,15 @@
   }
 
   //FUNCTIONS HERE
-  function GetFromTime($from) //get start time
+  function GetFromTime($con,$from) //get start time
   {
-    $getFromTime = mysql_query("select tTime from timetable where tid = $from");
 
-    if(mysql_num_rows($getFromTime)>0)
+    //$qGetFrom = "select tTime from timetable where tid = '$from'";
+    $getFromTime = mysqli_query($con,"select tTime from timetable where tid = '$from'");
+
+    if(mysqli_num_rows($getFromTime)>0)
     {
-      while($row = mysql_fetch_array($getFromTime))
+      while($row = mysqli_fetch_array($getFromTime))
       {
         $fromTime = $row['tTime'];
       } 
@@ -171,13 +178,15 @@
     return $fromTime;
   }
 
-  function GetToTime($to) //get end time
+  function GetToTime($con,$to) //get end time
   {
     $toTime = "";
-    $getToTime = mysql_query("select tTime from timetable where tid = $to");
-    if(mysql_num_rows($getToTime)>0)
+    $qGetTo = "select tTime from timetable where tid = '$to'";
+    $getToTime = mysqli_query($con,$qGetTo);
+
+    if(mysqli_num_rows($getToTime)>0)
     {
-      while($row = mysql_fetch_array($getToTime))
+      while($row = mysqli_fetch_array($getToTime))
       {
         $toTime = $row['tTime'];
       }
@@ -186,12 +195,14 @@
     return $toTime;
   }
 
-  function ConvertToTid($time)
+  function ConvertToTid($con,$time)
   {
-    $getTid = mysql_query("select tID from timetable where tTime = '$time'");
-    if(mysql_num_rows($getTid)>0)
+    $qGetID = "select tID from timetable where tTime = '$time'";
+    $getTid = mysqli_query($con,$qGetID);
+
+    if(mysqli_num_rows($getTid)>0)
     {
-      while($row = mysql_fetch_array($getTid))
+      while($row = mysqli_fetch_array($getTid))
       {
         $time = $row['tID'];
       }

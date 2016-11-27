@@ -10,10 +10,10 @@
     $arrayIsExpired = array();
    // $arrayDateOfUse = array();
 
-    $getRequests = mysql_query("select * from requests where requesterID='$username'");
-    if(mysql_num_rows($getRequests) > 0)
+    $getRequests = mysqli_query($con,"select * from requests where requesterID='$username'");
+    if(mysqli_num_rows($getRequests) > 0)
     {
-        while($row = mysql_fetch_array($getRequests))
+        while($row = mysqli_fetch_array($getRequests))
         {
             if($row['dateOfUse'] < $currentdate)
             {
@@ -26,11 +26,11 @@
     {
         $temp = '';
 
-        $queryIsExpired = mysql_query("select isExpired from requests where requestID='$arrayID[$ctr]'");
+        $queryIsExpired = mysqli_query($con,"select isExpired from requests where requestID='$arrayID[$ctr]'");
 
-        if(mysql_num_rows($queryIsExpired)>0)
+        if(mysqli_num_rows($queryIsExpired)>0)
         {
-          while($row = mysql_fetch_array($queryIsExpired))
+          while($row = mysqli_fetch_array($queryIsExpired))
           {
             $temp = $row['isExpired'];
           } 
@@ -38,12 +38,12 @@
 
         if($temp == 0)
         {
-            mysql_query("UPDATE requests set isExpired='1' where requestID='$arrayID[$ctr]'");
+            mysqli_query($con,"UPDATE requests set isExpired='1' where requestID='$arrayID[$ctr]'");
             
             $notif = "INSERT into notification values ('$arrayID[$ctr]', 'staff', '0')";
-            if (!mysql_query($notif, $con)) 
+            if (!mysqli_query($con,$notif)) 
             {
-                die('Error: ' . mysql_error());
+                die('Error: ' . mysqli_error());
             }
         }
         

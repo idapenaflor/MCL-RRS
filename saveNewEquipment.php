@@ -1,5 +1,5 @@
 <?php
-	include('connects.php');
+	require('connects.php');
 	session_start();
 
 	if (isset($_SESSION['id']))
@@ -13,9 +13,9 @@
 
 		$sql1 = "INSERT into equipment (ename, edept, qty, onhand, modified, created) values ('$ename', '$type', '$qty', '$qty', '$currentdate', '$currentdate')";
 
-		if (!mysql_query($sql1, $con))
+		if (!mysqli_query($con,$sql1))
 		{
-			die('Error: ' . mysql_error());
+			die('Error: ' . mysqli_error());
 		}
 		else
 		{

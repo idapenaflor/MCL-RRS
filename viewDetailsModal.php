@@ -1,6 +1,6 @@
 <form action = 'printPermit.php' method='post'>
 <?php
-	include('connects.php');
+	require('connects.php');
 	include('log-auth.php');
 
 	$name = $fname . ' ' . $lname;
@@ -29,11 +29,11 @@
 	$lmoStyle = '';
 	$req_status = '';
 
-	$query1 = mysql_query("select * from requests where requestID='$requestID'");
+	$query1 = mysqli_query($con,"select * from requests where requestID='$requestID'");
 
-	if(mysql_num_rows($query1)>0)
+	if(mysqli_num_rows($query1)>0)
 	{
-		while($row = mysql_fetch_array($query1))
+		while($row = mysqli_fetch_array($query1))
 		{
 		  	$req_status = $row['status'];	
 		  	$purpose = $row['purpose'];
@@ -45,11 +45,11 @@
 		} 
 	}
 
-	$query = mysql_query("select * from action where requestID='$requestID'");
+	$query = mysqli_query($con,"select * from action where requestID='$requestID'");
 
-	if(mysql_num_rows($query)>0)
+	if(mysqli_num_rows($query)>0)
 	{
-		while($row = mysql_fetch_array($query))
+		while($row = mysqli_fetch_array($query))
 		{
 		  $deanAction = $row['deanAction'];
 		  $cdmoAction = $row['cdmoAction'];
@@ -61,11 +61,11 @@
 		} 
 	}
 
-	$query = mysql_query("select * from remarks where requestID='$requestID'");
+	$query = mysqli_query($con,"select * from remarks where requestID='$requestID'");
 
-	if(mysql_num_rows($query)>0)
+	if(mysqli_num_rows($query)>0)
 	{
-		while($row = mysql_fetch_array($query))
+		while($row = mysqli_fetch_array($query))
 		{
 		  $remarks = $row['remarks'];
 		} 

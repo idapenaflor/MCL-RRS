@@ -1,5 +1,5 @@
 <?php
-	include('connects.php');
+	require('connects.php');
 
 	date_default_timezone_set('Singapore');
     $currentdate = date('m/d/Y');
@@ -23,30 +23,30 @@
 
 	if($account == 'Staff')
 	{
-		$output = GetStaffNotif($output, $account, $countid, $arrayID, $currentdate, $userid);
+		$output = GetStaffNotif($con, $output, $account, $countid, $arrayID, $currentdate, $userid);
 	}
 	else
 	{
-		$output = GetAdminNotif($output, $account, $countid, $arrayID, $currentdate, $dept);
+		$output = GetAdminNotif($con,$output, $account, $countid, $arrayID, $currentdate, $dept);
 	}
 	
 
     echo $output;
 
 
-	function GetAdminNotif($output, $account, $countid, $arrayID, $currentdate, $dept)
+	function GetAdminNotif($con, $output, $account, $countid, $arrayID, $currentdate, $dept)
 	{
 		if($account == 'Dean')
 		{
-			$getNotifs = mysql_query("select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account' and requests.dept='$dept'");
+			$getNotifs = mysqli_query($con,"select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account' and requests.dept='$dept'");
 		}
 		else
 		{
-			$getNotifs = mysql_query("select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account'");
+			$getNotifs = mysqli_query($con,"select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account'");
 		}
-		if(mysql_num_rows($getNotifs) > 0)
+		if(mysqli_num_rows($getNotifs) > 0)
 	    {
-	        while($row = mysql_fetch_array($getNotifs))
+	        while($row = mysqli_fetch_array($getNotifs))
 	        {
 	            $arrayID[] = $row['requestID'];
 	            $arrayDept[] = $row['dept'];
@@ -57,11 +57,11 @@
 	    for($ctr=0; $ctr<count($arrayID); $ctr++)
 	    {
 	    	//QUERY TO GET THE NAMES
-	    	$getNotifs = mysql_query("select * from account join requests on account.id=requests.requesterID where requests.requestID='$arrayID[$ctr]'");
+	    	$getNotifs = mysqli_query($con,"select * from account join requests on account.id=requests.requesterID where requests.requestID='$arrayID[$ctr]'");
 
-			if(mysql_num_rows($getNotifs) > 0)
+			if(mysqli_num_rows($getNotifs) > 0)
 		    {
-		        while($row = mysql_fetch_array($getNotifs))
+		        while($row = mysqli_fetch_array($getNotifs))
 		        {
 		            $arrayFname[] = $row['fname'];
 		            $arrayLname[] = $row['lname'];
@@ -70,11 +70,11 @@
 
 
 		    //QUERY TO GET IF THE NOTIFICATION IS NOTIFIED OR NOT
-		    $isnotify = mysql_query("select * from notification where requestID='$arrayID[$ctr]' and account='$account'");
+		    $isnotify = mysqli_query($con,"select * from notification where requestID='$arrayID[$ctr]' and account='$account'");
 
-			if(mysql_num_rows($isnotify) > 0)
+			if(mysqli_num_rows($isnotify) > 0)
 		    {
-		        while($row = mysql_fetch_array($isnotify))
+		        while($row = mysqli_fetch_array($isnotify))
 		        {
 		            $arrayIsNotified[] = $row['isNotified'];
 		        }
@@ -90,11 +90,11 @@
 		    {
 		    	case 'Dean':
 		    	{
-		    		$getTime = mysql_query("select dateoffiling from requests where requestID='$arrayID[$ctr]'");
+		    		$getTime = mysqli_query($con,"select dateoffiling from requests where requestID='$arrayID[$ctr]'");
 
-		    		if(mysql_num_rows($getTime) > 0)
+		    		if(mysqli_num_rows($getTime) > 0)
 				    {
-				        while($row = mysql_fetch_array($getTime))
+				        while($row = mysqli_fetch_array($getTime))
 				        {
 				            $arrayTime[] = $row['dateoffiling'];
 				        }
@@ -104,11 +104,11 @@
 
 		    	case 'LMO':
 		    	{
-		    		$getTime = mysql_query("select deanDate from action where requestID='$arrayID[$ctr]'");
+		    		$getTime = mysqli_query($con,"select deanDate from action where requestID='$arrayID[$ctr]'");
 
-		    		if(mysql_num_rows($getTime) > 0)
+		    		if(mysqli_num_rows($getTime) > 0)
 				    {
-				        while($row = mysql_fetch_array($getTime))
+				        while($row = mysqli_fetch_array($getTime))
 				        {
 				            $arrayTime[] = $row['deanDate'];
 				        }
@@ -118,11 +118,11 @@
 
 		    	case 'CDMO':
 		    	{
-		    		$getTime = mysql_query("select * from action where requestID='$arrayID[$ctr]'");
+		    		$getTime = mysqli_query($con,"select * from action where requestID='$arrayID[$ctr]'");
 
-		    		if(mysql_num_rows($getTime) > 0)
+		    		if(mysqli_num_rows($getTime) > 0)
 				    {
-				        while($row = mysql_fetch_array($getTime))
+				        while($row = mysqli_fetch_array($getTime))
 				        {
 				            if($row['lmoAction'] == 'N/A')
 				            {
@@ -198,13 +198,13 @@
 	    return $output;
 	}
 
-	function GetStaffNotif($output, $account, $countid, $arrayID, $currentdate, $userid)
+	function GetStaffNotif($con, $output, $account, $countid, $arrayID, $currentdate, $userid)
 	{
-		$getNotifs = mysql_query("select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account' and requests.requesterID='$userid'");
+		$getNotifs = mysqli_query($con,"select * from requests join notification on requests.requestID=notification.requestID where notification.account='$account' and requests.requesterID='$userid'");
 
-		if(mysql_num_rows($getNotifs) > 0)
+		if(mysqli_num_rows($getNotifs) > 0)
 	    {
-	        while($row = mysql_fetch_array($getNotifs))
+	        while($row = mysqli_fetch_array($getNotifs))
 	        {
 	            if (in_array($row['requestID'], $arrayID))
 			    {
@@ -232,11 +232,11 @@
 	    for($ctr=0; $ctr<count($arrayID); $ctr++)
 	    {
 	    	//QUERY TO GET IF THE NOTIFICATION IS NOTIFIED OR NOT
-		    $isnotify = mysql_query("select * from notification where requestID='$arrayID[$ctr]' and account='$account'");
+		    $isnotify = mysqli_query($con,"select * from notification where requestID='$arrayID[$ctr]' and account='$account'");
 
-			if(mysql_num_rows($isnotify) > 0)
+			if(mysqli_num_rows($isnotify) > 0)
 		    {
-		        while($row = mysql_fetch_array($isnotify))
+		        while($row = mysqli_fetch_array($isnotify))
 		        {
 		            $arrayIsNotified[] = $row['isNotified'];
 		        }
@@ -244,11 +244,11 @@
 
 	    	if($arrayStatus[$ctr] == 'Approved')
 	    	{
-	    		$getTime = mysql_query("select cdmoDate from action where requestID='$arrayID[$ctr]'");
+	    		$getTime = mysqli_query($con,"select cdmoDate from action where requestID='$arrayID[$ctr]'");
 
-	    		if(mysql_num_rows($getTime) > 0)
+	    		if(mysqli_num_rows($getTime) > 0)
 			    {
-			        while($row = mysql_fetch_array($getTime))
+			        while($row = mysqli_fetch_array($getTime))
 			        {
 			            $arrayTime[] = $row['cdmoDate'];
 			        }
@@ -256,11 +256,11 @@
 	    	}
 	    	else if($arrayStatus[$ctr] == 'Rejected')
 	    	{
-	    		$getTime = mysql_query("select * from action where requestID='$arrayID[$ctr]'");
+	    		$getTime = mysqli_query($con,"select * from action where requestID='$arrayID[$ctr]'");
 
-	    		if(mysql_num_rows($getTime) > 0)
+	    		if(mysqli_num_rows($getTime) > 0)
 			    {
-			        while($row = mysql_fetch_array($getTime))
+			        while($row = mysqli_fetch_array($getTime))
 			        {
 			            if($row['deanAction'] == 'Rejected')
 			            {
