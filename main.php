@@ -81,7 +81,7 @@
                             <!-- ====RADIO GROUP==== -->
                             <span class="label label-info" style="font-size: 12pt">Filter By:</span><br/><br/>
                   
-                            <label class="r"><input type="radio" name="filterby" class="radio-all" value="all" id="filterby"> All Rooms</label><br/>
+                            <label class="r"><input type="radio" name="filterby" class="radio-all" checked value="all" id="filterby"> All Rooms</label><br/>
                             <label class="r"><input type="radio" name="filterby" class="radio-lecture" value="Lecture Room" id="filterby"> Lecture Rooms</label><br/>
                             <label class="r"><input type="radio" name="filterby" class="radio-lab" value="Laboratory" id="filterby"> Laboratories</label><br/>
                             <label class="r"><input type="radio" name="filterby"  class="radio-outdoor" value="Outdoors" id="filterby"> Outdoors</label> <br/><br/>

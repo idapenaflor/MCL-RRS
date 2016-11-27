@@ -1,4 +1,4 @@
-<table id="example1" class="table table-bordered table-hover report-table">
+<table id="report-table" class="table table-bordered table-hover report-table">
   <thead>
     <tr>
       <th>Request ID</th>
