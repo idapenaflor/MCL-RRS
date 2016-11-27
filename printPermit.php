@@ -7,7 +7,7 @@
   // $dateofuse = $_POST['dateofuse'];
   // $purpose = $_POST['purpose'];
   // $room = $_POST['room'];
-//=====================CREATED BY ALYSSA GANOTISI AND IDA PENAFLOR=============
+//============CREATED BY ALYSSA GANOTISI AND IDA PENAFLOR=============
 class PDF extends FPDF
 {
   protected $col = 0; // Current column
