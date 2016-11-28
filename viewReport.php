@@ -21,6 +21,21 @@
       $arrayStatus = array();
 
       $month = date('m');
+
+      $type = $_SESSION['type'];
+
+      $output = '';
+      $month = date('m');
+
+      if($type == 'LMO')
+      {
+        $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
+      }
+      else
+      {
+          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfFiling like '$month%'");
+      }
+
     ?>
     <div class="wrapper">
     <header class="main-header">
@@ -75,10 +90,29 @@
                       </select>
 
                       <div class="pull-right">
-                        <a href='#' class='btn btn-success generate-report' id="generate-report" title="Generate Report">
-                        <i class="fa fa-print"></i> <span>Generate Report</span>
-                        </a>
-                      </div>
+                        
+                      <?php
+                        if(mysqli_num_rows($getRequests) > 0)
+                          {
+                              while($row = mysqli_fetch_array($getRequests))
+                              {
+                                  $arrayID[] = $row['requestID'];
+                                  $arrayDept[] = $row['dept'];
+                                  $arrayDateFiled[] = $row['dateOfFiling'];
+                                  $arrayDateUse[] = $row['dateOfUse'];
+                                  $arrayRoom[] = $row['room'];
+                                  $arrayStatus[] = $row['status'];
+                              }
+                            $output1 = "<a href='#' class='btn btn-success generate-report' id='generate-report' title='Generate Report'><i class='fa fa-print'></i> <span>Generate Report</span></a>";
+                          }
+                          else
+                          {
+                            $output1 = "<a href='#' class='btn btn-success generate-report' id='generate-report' title='Generate Report' disabled=true style='cursor:not-allowed;'><i class='fa fa-print'></i> <span>Generate Report</span></a>";
+                          }
+
+                        echo $output1;
+                      ?>
+                    </div>
                     </h4></p>
                     <input type='hidden' id='admin-type' name='type' value='<?php echo ($_SESSION['type']); ?>'/>
                   </div> <!--======END OF BOX header=======-->
@@ -96,37 +130,6 @@
                           </tr>
                         </thead>
                       <?php
-                        $type = $_SESSION['type'];
-
-                        $output = '';
-                        $month = date('m');
-
-                        if($type == 'LMO')
-                        {
-                          $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
-                        }
-                        else
-                        {
-                          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfFiling like '$month%'");
-                        }
-
-                          if(mysqli_num_rows($getRequests) > 0)
-                          {
-                              while($row = mysqli_fetch_array($getRequests))
-                              {
-                                  $arrayID[] = $row['requestID'];
-                                  $arrayDept[] = $row['dept'];
-                                  $arrayDateFiled[] = $row['dateOfFiling'];
-                                  $arrayDateUse[] = $row['dateOfUse'];
-                                  $arrayRoom[] = $row['room'];
-                                  $arrayStatus[] = $row['status'];
-                              }
-                          }
-                          else
-                          {
-                            //$output = 'No Requests.';
-                          }
-
                           if(count($arrayID) != 0)
                           {
 
@@ -140,6 +143,7 @@
                               <td>$arrayRoom[$ctr]</td>
                               </tr>";
                             }
+
                             $output .= "</table>";
                           }
 
@@ -160,19 +164,6 @@
  </body>
 </html>
 
-<script>
-  $(function () {
-    $("#example1").DataTable();
-    $('#example2').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false
-    });
-  });
-</script>
 
 <!-- GENERATE REPORT MODAL-->
 <form action='generateReport.php' method='post'>

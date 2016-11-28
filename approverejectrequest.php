@@ -91,7 +91,8 @@ session_start();
                     die('Error: ' . mysqli_error());
                 }
             }
-            mysqli_query("UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
+            echo $requestID;
+            mysqli_query($con, "UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
         }
         else if($action == 'Rejected')
         {
