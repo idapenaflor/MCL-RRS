@@ -165,6 +165,7 @@
 	if($req_status == 'Approved')
 	{
 		echo "<div class='modal-footer'>
+		<a href='printPermit.php?name=$name&dept=$dept&time=$time&fromindex=$from&dateofuse=$dateofuse&dateoffiling=$dateoffiling&purpose=$purpose&room=$room' class='btn btn-primary'>Print Permit</a>
         <input type='submit' name='print' value='Print Permit' class='btn btn-primary'/>
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
     	 </div>";

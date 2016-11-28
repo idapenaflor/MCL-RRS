@@ -1,17 +1,13 @@
 <?php
   require("plugins/fpdf/fpdf.php");
-  // $name = $_POST['name'];
-  // $dept = $_POST['dept'];
-  // $time = $_POST['time'];
-  // $dateoffiling = $_POST['dateoffiling'];
-  // $dateofuse = $_POST['dateofuse'];
-  // $purpose = $_POST['purpose'];
-  // $room = $_POST['room'];
+  
 //=====================CREATED BY ALYSSA GANOTISI AND IDA PENAFLOR=============
 class PDF extends FPDF
 {
   protected $col = 0; // Current column
   protected $y=0;      // Ordinate of column start
+
+
   
 // Page header
   function Header()
@@ -29,6 +25,13 @@ class PDF extends FPDF
   }
   function ChapterTitle($file)
   {
+    $name = $_GET['name'];
+    $dept = $_GET['dept'];
+    $time = $_GET['time'];
+    $dateoffiling = $_GET['dateoffiling'];
+    $dateofuse = $_GET['dateofuse'];
+    $purpose = $_GET['purpose'];
+
      $lbl = 'REQUESTER (FULL NAME)';
      $lbl2 = 'OFFICE/DEPT/COLLEGE';
      $lbl3 = 'DATE OF FILING';
@@ -54,7 +57,7 @@ class PDF extends FPDF
 
       //NAME OF REQUESTER
       $this->SetFont('Arial','',8);
-      $this->Cell(85,$heightL,'Sample',1,1,'C',true);
+      $this->Cell(85,$heightL,$name,1,1,'C',true);
       $this->Ln(1);
 
       //NATURE OF ACTIVITY
@@ -62,7 +65,7 @@ class PDF extends FPDF
       $this->Cell(40,$heightT,$lbl4,1,1,'L',true);
 
       $this->SetFont('Arial','',8);
-      $this->Cell(93,$heightL,'Sample',1,1,'C',true);
+      $this->Cell(93,$heightL,$purpose,1,1,'C',true);
 
       //The BorderBox
       $actual_position_y = $this->GetY();
@@ -76,7 +79,7 @@ class PDF extends FPDF
 
       $this->SetXY(98, 53);
       $this->SetFont('Arial','',8);
-      $this->Cell(56,$heightL,'Sample',1,1,'C',true);
+      $this->Cell(56,$heightL,$dept,1,1,'C',true);
 
       //DATE OF USE
       $this->SetXY(106, 61);
@@ -85,7 +88,7 @@ class PDF extends FPDF
 
       $this->SetXY(106, 66);
       $this->SetFont('Arial','',8);
-      $this->Cell(48,$heightL,'08/06/2016',1,1,'C',true);
+      $this->Cell(48,$heightL,$dateofuse,1,1,'C',true);
 
       //DATE OF FILING
       $this->SetXY(157, 48);
@@ -94,7 +97,7 @@ class PDF extends FPDF
 
       $this->SetXY(157, 53);
       $this->SetFont('Arial','',8);
-      $this->Cell(43,$heightL,'08/01/2016',1,1,'C',true);
+      $this->Cell(43,$heightL,$dateoffiling,1,1,'C',true);
 
       //TIME OF USE
       $this->SetXY(157, 61);
@@ -103,7 +106,7 @@ class PDF extends FPDF
 
       $this->SetXY(157, 66);
       $this->SetFont('Arial','',8);
-      $this->Cell(43,$heightL,'8:00am-10:00am',1,1,'C',true);
+      $this->Cell(43,$heightL,$time,1,1,'C',true);
 
       //TABLE
       $this->SetXY(10, 77);
@@ -277,6 +280,8 @@ class PDF extends FPDF
     $boolean_variable = false;
     $checkbox_size = 3;
 
+    $room = $_GET['room'];
+    
     //KAPAG NAKAFALSE WALANG CHECKBOX
     if($boolean_variable == true)
     $check = "4"; else $check = ""; //4 kasi sya yung checkbox
@@ -295,6 +300,7 @@ class PDF extends FPDF
         $this->Cell($checkbox_size, $checkbox_size, $check, 1, 0);
         $this->SetFont('Arial','',7); 
         $this->Cell(4,4,$aRooms[$y],0,1); //0-1 katuloy lang
+
       //$check="4";
         if($y>=3)
         {
