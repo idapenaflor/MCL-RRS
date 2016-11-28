@@ -145,7 +145,7 @@
 	$output .="
 	<p><h3>Additional Equipment</h3></p>";
 
-	$time = $from . ' - ' . $to;
+	$time = $from . '-' . $to;
 	$dateoffiling = date('m/d/Y');
 	//HIDDEN VALUES FOR POSTING
 	$output .="
@@ -164,9 +164,18 @@
 
 	if($req_status == 'Approved')
 	{
+		$requestID = encrypt_url($requestID);
+		$name = encrypt_url($name);
+		$dept = encrypt_url($dept);
+		$time = encrypt_url($time);
+		$from = encrypt_url($from);
+		$dateofuse = encrypt_url($dateofuse);
+		$dateoffiling = encrypt_url($dateoffiling);
+		$purpose = encrypt_url($purpose);
+		$room = encrypt_url($room);
+
 		echo "<div class='modal-footer'>
-		<a href='printPermit.php?name=$name&dept=$dept&time=$time&fromindex=$from&dateofuse=$dateofuse&dateoffiling=$dateoffiling&purpose=$purpose&room=$room' class='btn btn-primary'>Print Permit</a>
-        <input type='submit' name='print' value='Print Permit' class='btn btn-primary'/>
+		<a href='printPermit.php?id=$requestID&name=$name&dept=$dept&time=$time&dateofuse=$dateofuse&dateoffiling=$dateoffiling&purpose=$purpose&room=$room' class='btn btn-primary'>Print Permit</a>
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
     	 </div>";
 	}
@@ -177,5 +186,22 @@
     	</div>";
 	}
 	
+	function encrypt_url($string)
+	{
+	  $key = "MAL_979805"; //key to encrypt and decrypts.
+	  $result = '';
+	  $test = "";
+	   for($i=0; $i<strlen($string); $i++)
+	   {
+	     $char = substr($string, $i, 1);
+	     $keychar = substr($key, ($i % strlen($key))-1, 1);
+	     $char = chr(ord($char)+ord($keychar));
+
+	     $test[$char]= ord($char)+ord($keychar);
+	     $result.=$char;
+	   }
+
+	   return urlencode(base64_encode($result));
+	}
 ?>
 </form>
