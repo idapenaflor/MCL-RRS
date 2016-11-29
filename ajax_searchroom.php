@@ -1,9 +1,9 @@
-<table class="table table-striped" style="width: auto;text-align:center;z-index:840;">
+<table class="table table-hover" style="width:auto;z-index:840;">
     <thead class="tstyle" style="background-color:#3c8dbc;color:white;display:block;">
       <center>
-        <th style="font-size: 12pt;padding-left:75pt;padding-right: 75pt;text-align:center;">Room Name</th>
-        <th style="font-size: 12pt;padding-left:70pt;padding-right: 70pt;text-align:center;">Type</th>
-        <th style="font-size: 12pt;padding-left:70pt;padding-right: 70pt;text-align:center;">Action</th>
+        <th style="font-size: 12pt;padding-left:70pt;padding-right: 75pt;text-align:center;">Facility Name</th>
+        <th style="font-size: 12pt;padding-left:80pt;padding-right: 70pt;text-align:center;">Type</th>
+        <th style="font-size: 12pt;padding-left:80pt;padding-right: 70pt;text-align:center;">Action</th>
       </center>
 </thead>
   <?php
@@ -146,12 +146,12 @@
 
       //echo count($arrayVacantRoom);
 
-      echo "<tbody style='height:300pt;display:block;overflow-y:auto'>";
+      echo "<tbody style='height:220pt;display:block;overflow-y:auto'>";
       for($ctr = 0 ; $ctr < count($arrayFinalRoom) ; $ctr++)
       {
         echo "<tr>";
-        echo "<td style='padding-left:65pt;padding-right: 75pt;text-align:center;'>$arrayFinalRoom[$ctr]</td>";
-        echo "<td style='padding-left:50pt;padding-right:50pt;'>$arrayFinalType[$ctr]</td>";
+        echo "<td style='width:220pt;text-align:center;'>$arrayFinalRoom[$ctr]</td>";
+        echo "<td style='width:200pt;text-align:center;'>$arrayFinalType[$ctr]</td>";
 
         echo "<td style='padding-left:70pt;padding-right:70pt;text-align:center;'><a href='#' class='btn-block btn-success view-data' name='$arrayFinalType[$ctr]' id='$arrayFinalRoom[$ctr]'><span class='glyphicon glyphicon-plus view-data' title='Request Room'></span></a></td>";
         echo "</tr>";

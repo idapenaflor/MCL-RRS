@@ -5,7 +5,6 @@ $(document).ready(function()
     var filterby=$('#filterby').val();
     var textf = $("#datetimepicker").val();
 
-
     if(textf == '')
     {
       $('#dis').slideDown().html('<span id="error">Please enter date</span>');

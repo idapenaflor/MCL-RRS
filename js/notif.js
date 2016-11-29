@@ -16,6 +16,7 @@ function get_notifs()
           {
             $('.label-notif').text(dataNotif.countid);
             $('.notif-header').text('You have ' + dataNotif.countid + ' update/s.');
+            
             if(dataNotif.account == 'Staff')
             {
               notify = new Notification('Request Update', {
