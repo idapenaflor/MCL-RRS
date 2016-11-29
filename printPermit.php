@@ -1,6 +1,8 @@
 <?php
   require("plugins/fpdf/fpdf.php");
-  
+  require("connects.php");
+  require("log-auth.php");
+
   function decryptor($string)
   {
       $output = false;
@@ -653,16 +655,29 @@ class PDF extends FPDF
 
 // Instanciation of inherited class
 // $pdf=new PDF();
-$pdf = new PDF('P','mm','A4');
-// $pdf->AliasNbPages();
-$pdf->AddPage();
-$pdf->Line(10, 23, 210-10, 23); //DRAW LINE
-$pdf->ChapterTitle('plugins/terms.txt');
-$pdf->ChapterBody();
-$pdf->CheckBoxes();
+
+$type = $_SESSION['type'];
+if($type=="Staff")
+{
+  $pdf = new PDF('P','mm','A4');
+  // $pdf->AliasNbPages();
+  $pdf->AddPage();
+  $pdf->Line(10, 23, 210-10, 23); //DRAW LINE
+  $pdf->ChapterTitle('plugins/terms.txt');
+  $pdf->ChapterBody();
+  $pdf->CheckBoxes();
 
 
-$pdf->SetFont('Arial','',5);  
-$pdf->Output();
+  $pdf->SetFont('Arial','',5);  
+  $pdf->Output();
+}
+else if($type=="Dean" || $type=="CDMO" || $type=="LMO")
+{
+  header("location:dv-main.php");
+}
+else
+{
+  header("location:login.php");
+}
 
 ?>
