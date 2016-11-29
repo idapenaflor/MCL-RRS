@@ -164,9 +164,18 @@
 
 	if($req_status == 'Approved')
 	{
+		$requestID = encryptor($requestID);
+		$name = encryptor($name);
+		$dept = encryptor($dept);
+		$time = encryptor($time);
+		$from = encryptor($from);
+		$dateofuse = encryptor($dateofuse);
+		$dateoffiling = encryptor($dateoffiling);
+		$purpose = encryptor($purpose);
+		$room = encryptor($room);
+
 		echo "<div class='modal-footer'>
-		<a href='printPermit.php?name=$name&dept=$dept&time=$time&fromindex=$from&dateofuse=$dateofuse&dateoffiling=$dateoffiling&purpose=$purpose&room=$room' class='btn btn-primary'>Print Permit</a>
-        <input type='submit' name='print' value='Print Permit' class='btn btn-primary'/>
+		<a href='printPermit.php?id=$requestID&name=$name&dept=$dept&time=$time&dateofuse=$dateofuse&dateoffiling=$dateoffiling&purpose=$purpose&room=$room' class='btn btn-primary'>Print Permit</a>
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
     	 </div>";
 	}
@@ -176,6 +185,20 @@
         <button type='button' class='btn btn-success' data-dismiss='modal'>OK</button>
     	</div>";
 	}
-	
+
+	function encryptor($string)
+	{
+	    $output = false;
+	    $encrypt_method = "AES-256-CBC";
+	    $secret_key = 'muni';
+	    $secret_iv = 'muni123';
+	    $key = hash('sha256', $secret_key);
+	    $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+        $output = openssl_encrypt($string, $encrypt_method, $key, 0, $iv);
+        $output = base64_encode($output);
+
+	    return $output;
+	}
 ?>
 </form>
