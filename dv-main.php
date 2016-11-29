@@ -56,7 +56,7 @@
                         <table id='example1' class='table table-bordered table-hover'>
                           <thead>
                             <tr>
-                              <th>Request ID</th>
+                              <!-- <th>Request ID</th> -->
                               <th>Requester</th>
                               <th>Date of Filing</th>
                               <th>Date of Use</th>
@@ -120,7 +120,7 @@
                            
                             $output .="
                             <tr>
-                            <td>$arrayID[$showDetailsCtr]</td>
+                            
                             <td>$arrayLname[$showDetailsCtr], $arrayFname[$showDetailsCtr]</td>
                             <td>$arrayDateOfFiling[$showDetailsCtr]</td>
                             <td>$arrayDateOfUse[$showDetailsCtr]</td>

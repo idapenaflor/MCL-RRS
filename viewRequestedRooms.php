@@ -43,7 +43,7 @@
                       <table id="example1" class="table table-bordered table-hover">
                         <thead>
                           <tr>
-                            <th>Request ID </th>
+                            <!-- <th>Request ID </th> -->
                             <th>Purpose of Activity</th>
                             <th>Date of Use</th>
                             <th>Time</th>
@@ -90,7 +90,7 @@
                           {
                             $output .="
                               <tr>
-                              <td>$arrayID[$showDetailsCtr]</td>
+                              
                               <td>$arrayPurpose[$showDetailsCtr]</td>
                               <td>$arrayDateOfUse[$showDetailsCtr]</td>
                               <td>$arrayFrom[$showDetailsCtr] - $arrayTo[$showDetailsCtr]</td>
