@@ -25,15 +25,15 @@
 		 <div class="container">
 		 	<div class="index large-4 medium-4 large-offset-4 medium-offset-4 columns">
 		 		<center>
-			 		<div id="title1"><img src="./img/title.png" width="85%" height="auto"></div>
+			 		<div id="title1"><img src="./img/title.png" width="85%" height="auto" alt="Title"></div>
 		 		</center>
 			</div><!--end of offset-->
 			<center>
 				<div class="panel" id="login">
 						<form action="login.php" method="post">
 							<div class="input-group">
-							  <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="txtUser" required="required" style="margin-top: 8px;height: 45px;" /> <br/><br/>
-							  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1" name="txtPass" required="required" style="margin-top: 8px;height: 45px;"/>
+							  <input type="text" class="form-control" placeholder="Username" name="txtUser" required="required" style="margin-top: 8px;height: 45px;" /> <br/><br/>
+							  <input type="password" class="form-control" placeholder="Password" name="txtPass" required="required" style="margin-top: 8px;height: 45px;"/>
 							</div><br/>
 
 							<input type="submit" class="btn btn-primary" name="btnLogin" value="Login"/>
