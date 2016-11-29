@@ -1,18 +1,18 @@
 <?php
   require("plugins/fpdf/fpdf.php");
   
-  function decrypt_url($string)
+  function decryptor($string)
   {
-    $key = "MAL_979805"; //key to encrypt and decrypts.
-    $result = '';
-    $string = base64_decode(urldecode($string));
-   for($i=0; $i<strlen($string); $i++) {
-     $char = substr($string, $i, 1);
-     $keychar = substr($key, ($i % strlen($key))-1, 1);
-     $char = chr(ord($char)-ord($keychar));
-     $result.=$char;
-   }
-   return $result;
+      $output = false;
+      $encrypt_method = "AES-256-CBC";
+      $secret_key = 'muni';
+      $secret_iv = 'muni123';
+      $key = hash('sha256', $secret_key);
+      $iv = substr(hash('sha256', $secret_iv), 0, 16);
+
+      $output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+
+      return $output;
   }
 //=====================CREATED BY ALYSSA GANOTISI AND IDA PENAFLOR=============
 class PDF extends FPDF
@@ -36,14 +36,14 @@ class PDF extends FPDF
   }
   function ChapterTitle($file)
   {
-    $name = decrypt_url($_GET['name']);
-    $dept = decrypt_url($_GET['dept']);
-    $time = decrypt_url($_GET['time']);
-    $dateoffiling = decrypt_url($_GET['dateoffiling']);
-    $dateofuse = decrypt_url($_GET['dateofuse']);
-    $purpose = decrypt_url($_GET['purpose']);
+    $name = decryptor($_GET['name']);
+    $dept = decryptor($_GET['dept']);
+    $time = decryptor($_GET['time']);
+    $dateoffiling = decryptor($_GET['dateoffiling']);
+    $dateofuse = decryptor($_GET['dateofuse']);
+    $purpose = decryptor($_GET['purpose']);
 
-     $lbl = 'REQUESTER (FULL NAME)';
+     $lbl = 'REQUESTER (FULL NAME)';  
      $lbl2 = 'OFFICE/DEPT/COLLEGE';
      $lbl3 = 'DATE OF FILING';
      $lbl4 = 'NATURE OF ACTIVITY/PURPOSE';
@@ -151,10 +151,10 @@ class PDF extends FPDF
   function ChapterBody()
   {
     require('connects.php');
-    $name = decrypt_url($_GET['name']);
-    $dept = decrypt_url($_GET['dept']);
-    $id = decrypt_url($_GET['id']);
-    $dateoffiling = decrypt_url($_GET['dateoffiling']);
+    $name = decryptor($_GET['name']);
+    $dept = decryptor($_GET['dept']);
+    $id = decryptor($_GET['id']);
+    $dateoffiling = decryptor($_GET['dateoffiling']);
     $deanName = '';
     $cdmoName = '';
     $lmoName = '';
@@ -319,8 +319,8 @@ class PDF extends FPDF
     $boolean_variable = false;
     $checkbox_size = 3;
 
-    $room = decrypt_url($_GET['room']);
-    $id = decrypt_url($_GET['id']);
+    $room = decryptor($_GET['room']);
+    $id = decryptor($_GET['id']);
 
     $rtype = '';
 
@@ -353,6 +353,10 @@ class PDF extends FPDF
       else
         { $roomType = 'LECOTHERS'; }
     }
+
+  //====================ADMINISTRATIVE OFFICE================
+    $aRooms = array('JP RIZAL HALL LOBBY', 'JP RIZAL HALL AIR WELL', 'TRACK OVAL', 'BASKETBALL COURT', 'VOLLEYBALL COURT', 'ET YUNCHENGCO HALL LOBBY', 'SHANNON DRIVE', 'EINSTEIN DRIVE');
+
 
     $pXaxis1 = 17;
     $pYaxis1 = 92;
