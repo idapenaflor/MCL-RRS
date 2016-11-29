@@ -129,15 +129,26 @@
     <script src="./js/searchroom.js"></script> -->
 
    <script>
-
-      onSelect: function()
-      {
-       var dateObject = $(this).datetimepicker('getDate');
-        console.log('asd');
-       //alert(dateObject);
-      }
+    $(function ()
+    {
+      var date = new Date();
+      date.setDate(date.getDate());
+      $("#datetimepicker")
+      .datetimepicker(
+        {
+        timepicker:false,
+        format: 'm/d/Y',
+        showTodayButton: true,
+        showClear: true,
+        minDate: date,
+        onSelect: function()
+        {
+         var dateObject = $(this).datetimepicker('getDate');
+        }
+      });
     });
   </script>
+
   <script>
     $(document).ready(function() {
       $('#eventForm')
@@ -156,6 +167,7 @@
                         },
                         date: {
                             format: 'MM/DD/YYYY',
+                            message: 'The date is not valid',
                             min: '01/01/2016',
                             max: '12/30/2050'
                         }
