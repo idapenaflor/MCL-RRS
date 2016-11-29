@@ -35,16 +35,19 @@
           <!-- Main content -->
           <section class="content"> <hr/>
             <!--============FORM=============-->
+              <form method="post" action="" id="eventForm">
               <div class="row" style="padding-top: 10px;">
-                <div class="col-xs-12">
-                  <div class="box">
+                <div class="col-xs-3">
+                  <div class="box" style="height:320pt;">
                     <div class="box-header" style="background-color: none;">
-                      <form method="post" action="" id="eventForm">
-                        <label id="dis" style="width:250px;"></label><br/><br/>
-                        <section class="col-md-3">
-
+                      <div><i class="fa fa-plus-square" style="font-size:1.5em"></i>
+                          <span style="font-size:14pt">&nbsp;Request</span>
+                      </div><br/>
+    
                           <div class="form-group">
-                            <span class="label label-primary" style="font-size: 12pt">Date of Use</span><!-- <br/><br/> -->
+                            <span style="font-size: 12pt">
+                              Date of Use:
+                            </span>
                             <div class="input-group" style="padding-left: 0px; height: 0px;">
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
@@ -52,8 +55,8 @@
                               <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:20px;" required="required"/>
                             </div>
                           </div>
-                          <span class="label label-primary" style="font-size: 12pt;">Time of Use</span><br/><br/>
-                          <span><select class="combo" name="cmbFrom" id="cmbFrom" onchange="ValidateSelect()" required="required">
+                          <span style="font-size:12pt;">Time of Use:</span><br/>
+                          <span><select class="combo" name="cmbFrom" id="cmbFrom" onchange="ValidateSelect()" required="required" style="width:80pt">
                                     <option value="1">7:00am</option>
                                     <option value="2">8:30am</option>
                                     <option value="3">10:00am</option>
@@ -65,7 +68,7 @@
                                     <option value="9">7:00pm</option>
                                   </select>
                                   -
-                                 <select class="combo" name="cmbTo" id="cmbTo" required="required">
+                                 <select class="combo" name="cmbTo" id="cmbTo" required="required" style="width:80pt">
                                     <option value="2">8:30am</option>
                                     <option value="3">10:00am</option>
                                     <option value="4">11:30am</option>
@@ -79,7 +82,7 @@
                             </span><br/><br/>
 
                             <!-- ====RADIO GROUP==== -->
-                            <span class="label label-info" style="font-size: 12pt">Filter By:</span><br/><br/>
+                            <span style="font-size: 12pt">Filter By:</span><br/>
                   
                             <label class="r"><input type="radio" name="filterby" class="radio-all" checked value="all" id="filterby"> All Rooms</label><br/>
                             <label class="r"><input type="radio" name="filterby" class="radio-lecture" value="Lecture Room" id="filterby"> Lecture Rooms</label><br/>
@@ -89,26 +92,26 @@
                             <!-- ===BUTTON==== -->
                             <input type="button" class="btn btn-block btn-success btn-search" name="btn-search" value="Search" id="btn-search"/> <br/><br/>
                             <input type='hidden' name='hiddenType' id='hiddenType' value='all'/> 
-                        </section>
-                        <section class="col-md-9 table-search">     
-                            <table class="table table-striped" style="width: auto;text-align:center;z-index:840;">
-                            <thead class="tstyle" style="background-color:#3c8dbc;color:white;display:block;border-radius:5px;">
-                              <center>
-                              <th style="font-size: 12pt;padding-left:75pt;padding-right: 75pt;text-align:center;">Room Name</th>
-                              <th style="font-size: 12pt;padding-left:70pt;padding-right: 70pt;text-align:center;">Type</th>
-                              <th style="font-size: 12pt;padding-left:70pt;padding-right: 70pt;text-align:center;">Action</th>
-                              </center>
-                            </thead>
-                              <?php
-                                require('searchRoom.php');
-                              ?>
-                            </table>
-                        </section>
-                      </form>
                     </div>
-                  </div><!--======END OF DIV box===========-->
+                  </div>
                 </div>
-              </div><!--======END OF DIV ROW===========-->
+
+                        
+                <div class="col-xs-9">
+                  <div class="box" style="height:320pt;overflow:hidden;">
+                    <div class="box-header" style="background-color: none;">
+                    <div><i class="fa fa-list-alt" style="font-size:1.5em"></i>
+                          <span style="font-size:14pt">&nbsp;&nbsp;List of Available Facilities</span>
+                      </div><br/>
+                      <center>
+                      <section class="table-search">
+                        No selection yet.
+                      </section>
+                      </center>
+                    </div>
+                  </div>
+                </div>                      
+            </form>
           </section>
     </div>
   <!--==========FOOTER========-->
