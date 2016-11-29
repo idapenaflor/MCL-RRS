@@ -56,6 +56,7 @@
                             </div>
                           </div>
                           <span style="font-size:12pt;">Time of Use:</span><br/>
+
                           <span><select class="combo" name="cmbFrom" id="cmbFrom" onchange="ValidateSelect()" required="required" style="width:80pt">
                                     <option value="1">7:00am</option>
                                     <option value="2">8:30am</option>
@@ -128,11 +129,6 @@
     <script src="./js/searchroom.js"></script> -->
 
    <script>
-    $("#datetimepicker")
-    .datetimepicker(
-      {
-      timepicker:false,
-      format: 'm/d/Y',
 
       onSelect: function()
       {
@@ -160,7 +156,6 @@
                         },
                         date: {
                             format: 'MM/DD/YYYY',
-                            message: 'The date is not a valid',
                             min: '01/01/2016',
                             max: '12/30/2050'
                         }
