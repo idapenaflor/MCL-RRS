@@ -47,6 +47,7 @@
                           <div class="form-group">
                             <span style="font-size: 12pt">
                               Date of Use:
+                              <label id="valid" style="float:right;color:red"></label>
                             </span>
                             <div class="input-group" style="padding-left: 0px; height: 0px;">
                               <div class="input-group-addon">
@@ -55,7 +56,9 @@
                               <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:20px;" required="required"/>
                             </div>
                           </div>
-                          <span style="font-size:12pt;">Time of Use:</span><br/>
+                          <span style="font-size:12pt;">Time of Use:
+                            <label id="valid2" style="float:right;color:red"></label>
+                          </span><br/>
 
                           <span><select class="combo" name="cmbFrom" id="cmbFrom" onchange="ValidateSelect()" required="required" style="width:80pt">
                                     <option value="1">7:00am</option>
@@ -104,11 +107,11 @@
                     <div><i class="fa fa-list-alt" style="font-size:1.5em"></i>
                           <span style="font-size:14pt">&nbsp;&nbsp;List of Available Facilities</span>
                       </div><br/>
-                      <center>
-                      <section class="table-search">
-                        No selection yet.
+                      <!-- <center> -->
+                      <section class="table-search" id="bodySelect">
+                        <div id="bodySelect-span"> No selection yet. </div>
                       </section>
-                      </center>
+                      <!-- </center> -->
                     </div>
                   </div>
                 </div>                      
@@ -120,13 +123,6 @@
       <?php include ('footer.php');?>
     </footer>
   </div><!--end of wrapper-->
-  
-  <!--==========JAVASCRIPT=======-->
-   <!--  <script src="./js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="./js/jquery.datetimepicker.full.js"></script>
-    <script src="./js/app.min.js"></script>
-    <script src="./js/searchroom.js"></script> -->
 
    <script>
     $(function ()
@@ -146,54 +142,6 @@
          var dateObject = $(this).datetimepicker('getDate');
         }
       });
-    });
-  </script>
-
-  <script>
-    $(document).ready(function() {
-      $('#eventForm')
-        .formValidation({
-            framework: 'bootstrap',
-            icon: {
-                valid: 'glyphicon glyphicon-ok',
-                invalid: 'glyphicon glyphicon-remove',
-                validating: 'glyphicon glyphicon-refresh'
-            },
-            fields: {
-                datetimepicker: {
-                    validators: {
-                        notEmpty: {
-                            message: 'The date is required'
-                        },
-                        date: {
-                            format: 'MM/DD/YYYY',
-                            message: 'The date is not valid',
-                            min: '01/01/2016',
-                            max: '12/30/2050'
-                        }
-                    }
-                }
-            }
-        })
-        .on('success.validator.fv', function(e, data) {
-            if (data.field === 'eventDate' && data.validator === 'date' && data.result.date) {
-                // The eventDate field passes the date validator
-                // We can get the current date as a Javascript Date object
-                var currentDate = data.result.date,
-                    day         = currentDate.getDay();
-
-                // If the selected date is Sunday
-                if (day === 0) {
-                    // Treat the field as invalid
-                    data.fv
-                        .updateStatus(data.field, data.fv.STATUS_INVALID, data.validator)
-                        .updateMessage(data.field, data.validator, 'Please choose a day except Sunday');
-                } else {
-                    // Reset the message
-                    data.fv.updateMessage(data.field, data.validator, 'The date is not valid');
-                }
-            }
-        });
     });
   </script>
  </body>
