@@ -7,14 +7,15 @@ $(document).ready(function()
 
     if(textf == '')
     {
-      $('#dis').slideDown().html('<span id="error">Please enter date</span>');
+      console.log('hello');
+      $('#valid').slideDown().html('<span id="error">Please enter date</span>');
       return false;
     }
 
     else
     {
       searched = true;
-      $('#dis').slideDown().html('<span id="success"></span>');
+      $('#valid').slideDown().html('<span id="success"></span>');
       $.ajax({
         type: 'POST',
         url: 'ajax_searchroom.php',

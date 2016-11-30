@@ -22,6 +22,8 @@ function aDrop()
 }
 function ValidateSelect()
     {
+      var from = document.getElementById("cmbFrom").value;
+      var to = document.getElementById("cmbTo").value;
       if (document.getElementById("cmbFrom").value == 9)
       {
         document.getElementById("cmbTo").value = 10;
@@ -29,6 +31,10 @@ function ValidateSelect()
       }
       else
       {
+        if(from > to)
+          { $('#valid2').innerHtml('Invalid time.'); }
+        else
+          { $('#valid2').slideDown().html('<span id="success"></span>');}
         document.getElementById("cmbTo").disabled = false;
       }
     }  
