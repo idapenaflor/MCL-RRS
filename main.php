@@ -107,11 +107,11 @@
                     <div><i class="fa fa-list-alt" style="font-size:1.5em"></i>
                           <span style="font-size:14pt">&nbsp;&nbsp;List of Available Facilities</span>
                       </div><br/>
-                      <!-- <center> -->
+                      <center>
                       <section class="table-search" id="bodySelect">
                         <div id="bodySelect-span"> No selection yet. </div>
                       </section>
-                      <!-- </center> -->
+                      </center>
                     </div>
                   </div>
                 </div>                      
