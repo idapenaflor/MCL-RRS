@@ -28,6 +28,6 @@
     <script src="./js/modal-requested-room.js"></script>
     <script src="./js/dataTable.js"></script>
 
-    <link rel="stylesheet" href="http://formvalidation.io/vendor/formvalidation/css/formValidation.min.css">
+   <!--  <link rel="stylesheet" href="http://formvalidation.io/vendor/formvalidation/css/formValidation.min.css">
     <script src="http://formvalidation.io/vendor/formvalidation/js/formValidation.min.js"></script>
-    <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script>
+    <script src="http://formvalidation.io/vendor/formvalidation/js/framework/bootstrap.min.js"></script> -->
