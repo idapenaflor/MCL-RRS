@@ -535,7 +535,9 @@ class PDF extends FPDF
         $arrayQty[] = $row['qty']; } 
     }
 
-    $eqC = array('PROJECTOR','SPEAKERS','MIC','CHAIRS','TABLES','PANEL BOARD','VIDEOCAM','COMPUTER','ROUND TABLE','COCKTAIL');
+    // $eqC = array('PROJECTOR','SPEAKERS','MIC','CHAIRS','TABLES','PANEL BOARD','VIDEOCAM','COMPUTER','ROUND TABLE','COCKTAIL');
+
+    $eqC = array('Projector','Speakers','Mic','Chairs','Tables','Panel Board','Videocam','Computer','Round Table','Cocktail');
 
     for($ctr=0; $ctr<count($arrayEquipment); $ctr++)
     {
