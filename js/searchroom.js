@@ -7,7 +7,6 @@ $(document).ready(function()
 
     if(textf == '')
     {
-      console.log('hello');
       $('#valid').slideDown().html('<span id="error">Please enter date</span>');
       return false;
     }

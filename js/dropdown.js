@@ -31,10 +31,14 @@ function ValidateSelect()
       }
       else
       {
-        if(from > to)
-          { $('#valid2').innerHtml('Invalid time.'); }
-        else
-          { $('#valid2').slideDown().html('<span id="success"></span>');}
+        if(from >= to)
+        { 
+          $('#valid2').slideDown().html('<span id="error">Invalid time.</span>');
+        }
+        else if(from < to)
+        { 
+          $('#valid2').slideDown().html('<span id="success"></span>');
+        }
         document.getElementById("cmbTo").disabled = false;
       }
     }  
