@@ -19,6 +19,7 @@
       $arrayDateUse = array();
       $arrayRoom = array();
       $arrayStatus = array();
+      $arrayPurpose = array();
 
       $month = date('m');
 
@@ -29,11 +30,11 @@
 
       if($type == 'LMO')
       {
-        $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfFiling like '$month%'");
+        $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfUse like '$month%'");
       }
       else
       {
-          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfFiling like '$month%'");
+          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfUse like '$month%'");
       }
 
     ?>
@@ -70,7 +71,7 @@
               <div class="col-xs-12">
                 <div class="box">
                   <div class="box-header">
-                    <p><h4>Date Covered
+                    <p><h4>Month Covered
                       <select class="combo" name="month" id="month" required="required">
                         <option <?= $month=="01" ? 'selected' : '' ?> value="01">January</option>
                         <option <?= $month=="02" ? 'selected' : '' ?> value="02">February</option>
@@ -88,7 +89,17 @@
                       <select class="combo" name="year" id="year" required="required">
                         <option value="2016">2016</option>
                       </select>
-
+                      
+                      <span style="padding-left:10pt">Department</span>
+                      <select class="combo" name="department" id="department" required="required">
+                        <option value="All">All</option>
+                        <option value="CAS">CAS</option>
+                        <option value="CCIS">CCIS</option>
+                        <option value="CMET">CMET</option>
+                        <option value="ETYCB">ETYCB</option>
+                        <option value="IEXCELL">IEXCELL</option>
+                        <option value="MITL">MITL</option>
+                      </select>
                       <div class="pull-right">
                         
                       <?php
@@ -102,6 +113,7 @@
                                   $arrayDateUse[] = $row['dateOfUse'];
                                   $arrayRoom[] = $row['room'];
                                   $arrayStatus[] = $row['status'];
+                                  $arrayPurpose[] = $row['purpose'];
                               }
                             $output1 = "<a href='#' class='btn btn-success generate-report' id='generate-report' title='Generate Report'><i class='fa fa-print'></i> <span>Generate Report</span></a>";
                           }
@@ -123,9 +135,11 @@
                           <tr>
                           <!--   <th>Request ID</th> -->
                             <th>Department</th>
+                            <th>Purpose</th>
                             <th>Date Filed</th>
                             <th>Date of Use</th>
                             <th>Room</th>
+                            <th>Equipment</th>
                            <!--  <th>Status</th>  -->
                           </tr>
                         </thead>
@@ -135,16 +149,45 @@
 
                             for ($ctr = 0 ; $ctr < count($arrayID) ; $ctr++)
                             {
+                              $arrayEquipments = array();
+                              $arrayQty = array();
+                              $equip = '';
+                              $query = mysqli_query($con,"select * from equipmentrequest where requestID='$arrayID[$ctr]'");
+
+                              if(mysqli_num_rows($query)>0)
+                              {
+                                while($row = mysqli_fetch_array($query))
+                                {
+                                  $arrayEquipments[] = $row['ename'];
+                                  $arrayQty[] = $row['qty'];
+                                } 
+                              }
+
+                              for($ctr2 = 0 ; $ctr2 < count($arrayEquipments) ; $ctr2++)
+                              {
+                                if($ctr2 == count($arrayEquipments) - 1)
+                                {
+                                  $equip .= '(' . $arrayQty[$ctr2] . ') ' . $arrayEquipments[$ctr2];
+                                }
+                                else
+                                {
+                                  $equip .= '(' . $arrayQty[$ctr2] . ') ' . $arrayEquipments[$ctr2] . ', ';
+                                }
+                              }
+
                               $output .="
                               <tr>
                               <td>$arrayDept[$ctr]</td>
+                              <td>$arrayPurpose[$ctr]</td>
                               <td>$arrayDateFiled[$ctr]</td>
                               <td>$arrayDateUse[$ctr]</td>
                               <td>$arrayRoom[$ctr]</td>
+                              <td>$equip</td>
                               </tr>";
                             }
 
                             $output .= "</table>";
+
                           }
 
                           echo $output;
@@ -164,10 +207,8 @@
  </body>
 </html>
 
-
-<!-- GENERATE REPORT MODAL-->
-<form action='generateReport.php' method='post'>
-<div id="generateModal" class="modal fade" role="dialog">
+<!--MODALS-->
+<div id="equipModal" class="modal fade" role="dialog">
   <div class="modal-dialog">
 
     <!-- Modal content-->
@@ -175,22 +216,19 @@
 
       <div class="modal-header" style="background-color:#428bca;color:white;">
         <button type="button" class="close" data-dismiss="modal" style="color:white">&times;</button>
-        <h4 class="modal-title">Room Usage Report</h4>
+        <h4 class="modal-title">Request Details</h4>
       </div>
      
-      <div class="modal-body" id="generate-report">
-        <div class="container-fluid">         
+      <div class="modal-body" id="request-details">
+        <div class="container-fluid">
+          
         </div>
-      </div>
-      <div class='modal-footer'>
-        <input type='submit' name='generate' value='Generate' class='btn btn-success btn-generate'/>
-        <button type='button' class='btn btn-danger' data-dismiss='modal'>Cancel</button>
-      </div>
-    </div>
+      </div> <!--=======END OF MODAL BODY===-->
+
+    </div> <!--==END OF MODAL CONTENT==-->
+
   </div>
 </div>
-</form>
-
 <!--END MODAL-->
 
 
