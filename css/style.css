@@ -242,12 +242,12 @@ color:#e01900;
 }
 #bodySelect
 {
-	position: absolute;
-	left:9%;                  
+	/*position: relative;*/
+	/*left:9%;*/                  
 }
 #bodySelect #bodySelect-span
 {
 	text-align: center;
 	margin-top: 15%;
-	margin-left: 355px;
+	/*margin-left: 355px;*/
 }

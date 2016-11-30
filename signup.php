@@ -1,23 +1,54 @@
+<?php
+	require("connects.php");
+	require("log-auth.php");
+	if($type=="OITS"){
+
+	}
+	else if($type=="Staff"){
+		header("location:main.php");
+	}
+	else if($type=="Dean" || $type=="LMO" || $type=="CDMO"){
+		header("location:dv-main.php");
+	}
+	else{
+		header("location:login.php");
+	}
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content-="width=device-width initial-scale=1">
     <title>MCL Room Reservation</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="./css/AdminLTE.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
     <script src="./js/dropdown.js"></script>
   </head>
 
   <body>
   	<!--======NAVIGATION===================-->
   	<nav class="navbar navbar-default navbar-static-top" style="margin-bottom: 0px;">
-	  <div class="container">
-		    <div class="navbar-header">
-		      <a class="navbar-brand" href="#">Malayan Colleges Laguna</a>
-		    </div>
- 	  </div><!-- /.container-fluid -->
+	  <div class="navbar-custom-menu">
+		  <div class="pull-right">
+		      <ul class="nav navbar-nav">
+		        <li class="dropdown user user-menu">
+		            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		              <span class="glyphicon glyphicon-user"></span><span class="hidden-xs">&nbsp;<?php echo($lname.', '.$fname.' ('.$mname.')');?></span><span class="caret"></span>
+		            </a>
+		            <ul class="dropdown-menu">
+		              <!-- <li class="header">&nbsp;</li> -->
+		              <li role="separator" class="divider"></li>
+		              <li><a href="logout.php"><span class="glyphicon glyphicon-log-out"></span>&nbsp;Logout</a></li>
+		            </ul>
+		        </li><!--end of li class user-->
+		      </ul>
+	      </div>
+    </div>
 	</nav>
 
 	<div id="parentDiv">
@@ -47,6 +78,7 @@
 												<option value="Dean">Dean</option>
 							          			<option value="CDMO" aria-labelledby="dropdownMenu1">CDMO</option>
 							          			<option value="LMO" aria-labelledby="dropdownMenu1">LMO</option>
+							          			<option value="OITS" aria-labelledby="dropdownMenu1">OITS</option>
 									  </select> <br/>
 
 										<select class="form-control" name="Dept" id="Dept" required="required">
