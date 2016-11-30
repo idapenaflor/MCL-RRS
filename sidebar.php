@@ -49,6 +49,13 @@
                       </a>
                     </li>
                   <?php endif; ?>
+                  <?php if($type == "OITS"): ?>
+                    <li>
+                      <a href="signup.php">
+                        <i class="fa fa-user-plus"></i> <span title="Register Account">Register Account</span>
+                      </a>
+                    </li>
+                  <?php endif; ?>
             </ul>
   </section>
 </aside>

@@ -31,8 +31,14 @@
               <?php if($type == "Staff"): ?>
                 <li><a href="main.php"><i class="fa fa-dashboard"></i> Home</a></li>
               <?php endif; ?>
-              <?php if($type == "Dean"): ?>
+              <?php if($type == "Dean" || $type=="LMO" || $type=="CDMO"): ?>
                 <li><a href="dv-main.php"><i class="fa fa-dashboard"></i> Home</a></li>
+              <?php endif; ?>
+              <?php if($type == "OITS"): ?>
+                <li><a href="signup.php"><i class="fa fa-dashboard"></i> Home</a></li>
+              <?php endif; ?>
+              <?php if($type == ""): ?>
+                <li><a href="login.php"><i class="fa fa-dashboard"></i> Home</a></li>
               <?php endif; ?>
 
                 <li class="active">Account Setting</li>

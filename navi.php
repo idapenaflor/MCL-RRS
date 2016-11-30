@@ -1,4 +1,4 @@
-<?php include_once('connects.php');
+<?php require('connects.php');
 include_once('log-auth.php');
 ?>
 <!--=========NAVIGATION==========-->
@@ -10,14 +10,16 @@ include_once('log-auth.php');
   <!--=============CUSTOM NAV====================-->
     <div class="navbar-custom-menu">
       <ul class="nav navbar-nav">
-        <li class="dropdown notifications-menu">
-            <a href="#" class="dropdown-toggle tab-notif" data-toggle="dropdown" aria-expanded=true>
-              <i class="fa fa-bell-o"></i>
-              <span class="label label-warning label-notif"></span>
-            </a>
-            <ul class="dropdown-menu notif-menu" style="overflow: hidden">
-            </ul>
-        </li>
+        <?php if($type == "Staff" || $type=="Dean" || $type=="LMO" || $type=="CDMO"): ?>
+          <li class="dropdown notifications-menu">
+              <a href="#" class="dropdown-toggle tab-notif" data-toggle="dropdown" aria-expanded=true>
+                <i class="fa fa-bell-o"></i>
+                <span class="label label-warning label-notif"></span>
+              </a>
+              <ul class="dropdown-menu notif-menu" style="overflow: hidden">
+              </ul>
+          </li>
+        <?php endif; ?>
         
         <li class="dropdown user user-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
