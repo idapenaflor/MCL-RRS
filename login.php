@@ -86,6 +86,10 @@ if (isset($_POST['btnLogin']))
     	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
     	header("location:main.php");
     }
+    else if($type=="OITS")
+    {
+    	header("location:signup.php");
+    }
     else if(!$row = mysqli_fetch_assoc($result)){
     	session_destroy();
 	 	echo "<script type='text/javascript'> alert ('Incorrect username and/or password.');</script>";

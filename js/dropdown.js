@@ -14,7 +14,7 @@ function aDrop()
 				 document.getElementById("Dept").options[4]=new Option("IEXCEL","IEXCEL");
 				 document.getElementById("Dept").options[5]=new Option("MITL","MITL");
 			}
-			else if (uType.value == "CDMO" || uType.value == "LMO")
+			else if (uType.value == "CDMO" || uType.value == "LMO" || uType.value == "OITS")
 			{
 				document.getElementById("Dept").options[0]=new Option("Admin","Admin");
       }
