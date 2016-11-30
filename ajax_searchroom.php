@@ -51,7 +51,6 @@
 
     if ($from >= $to)
     {
-      echo "<script language='javascript'>alert('Please select valid time range');</script>";
       echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"0; URL=main.php\">";
     }
     else
@@ -146,7 +145,7 @@
 
       //echo count($arrayVacantRoom);
 
-      echo "<tbody style='height:220pt;display:block;overflow-y:auto'>";
+      echo "<tbody style='height:250pt;display:block;overflow-y:auto'>";
       for($ctr = 0 ; $ctr < count($arrayFinalRoom) ; $ctr++)
       {
         echo "<tr>";

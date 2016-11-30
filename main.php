@@ -38,7 +38,7 @@
               <form method="post" action="" id="eventForm">
               <div class="row" style="padding-top: 10px;">
                 <div class="col-xs-3">
-                  <div class="box" style="height:320pt;">
+                  <div class="box" style="height:350pt;">
                     <div class="box-header" style="background-color: none;">
                       <div><i class="fa fa-plus-square" style="font-size:1.5em"></i>
                           <span style="font-size:14pt">&nbsp;Request</span>
@@ -58,7 +58,7 @@
                           </div>
                           <span style="font-size:12pt;">Time of Use:
                             <label id="valid2" style="float:right;color:red"></label>
-                          </span><br/>
+                          </span><br/><br/>
 
                           <span><select class="combo" name="cmbFrom" id="cmbFrom" onchange="ValidateSelect()" required="required" style="width:80pt">
                                     <option value="1">7:00am</option>
@@ -72,7 +72,7 @@
                                     <option value="9">7:00pm</option>
                                   </select>
                                   -
-                                 <select class="combo" name="cmbTo" id="cmbTo" required="required" style="width:80pt">
+                                 <select class="combo" name="cmbTo" id="cmbTo" required="required" style="width:80pt" onchange="ValidateSelect()">
                                     <option value="2">8:30am</option>
                                     <option value="3">10:00am</option>
                                     <option value="4">11:30am</option>
@@ -102,7 +102,7 @@
 
                         
                 <div class="col-xs-9">
-                  <div class="box" style="height:320pt;overflow:hidden;">
+                  <div class="box" style="height:350pt;overflow:hidden;">
                     <div class="box-header" style="background-color: none;">
                     <div><i class="fa fa-list-alt" style="font-size:1.5em"></i>
                           <span style="font-size:14pt">&nbsp;&nbsp;List of Available Facilities</span>
