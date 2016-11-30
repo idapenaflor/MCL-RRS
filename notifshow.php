@@ -329,7 +329,7 @@
 		    	{	
 		    		$output .="
 					<li>
-						<a href='printPermit.php'>
+						<a href='viewRequestedRooms.php'>
 							<i class='fa fa-check-circle' style='color:#5cb85c'></i>
 							Request for <b>$arrayPurpose[$ctr]</b> has been approved!
 							<br/>

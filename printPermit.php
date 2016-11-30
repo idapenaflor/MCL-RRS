@@ -36,7 +36,7 @@ class PDF extends FPDF
       // Title
       $this->Cell(40,20,'PERMIT TO USE FACILITIES/EQUIPMENT',0,0,'C');
   }
-  function ChapterTitle($file)
+  function ChapterTitle($con,$file)
   {
     $name = decryptor($_GET['name']);
     $dept = decryptor($_GET['dept']);
@@ -150,9 +150,9 @@ class PDF extends FPDF
       $this->Cell(50,20,'',1,1,'C',true);
 
   }
-  function ChapterBody()
+  function ChapterBody($con)
   {
-    require('connects.php');
+    //require('connects.php');
     $name = decryptor($_GET['name']);
     $dept = decryptor($_GET['dept']);
     $id = decryptor($_GET['id']);
@@ -314,9 +314,9 @@ class PDF extends FPDF
       $this->Line(152, 214, 210-13, 214); 
 
   }
-  function CheckBoxes()
+  function CheckBoxes($con)
   {
-    require('connects.php');
+    //require('connects.php');
     $actual_position_y = $this->GetY();
     $boolean_variable = false;
     $checkbox_size = 3;
@@ -663,10 +663,9 @@ if($type=="Staff")
   // $pdf->AliasNbPages();
   $pdf->AddPage();
   $pdf->Line(10, 23, 210-10, 23); //DRAW LINE
-  $pdf->ChapterTitle('plugins/terms.txt');
-  $pdf->ChapterBody();
-  $pdf->CheckBoxes();
-
+  $pdf->ChapterTitle($con,'plugins/terms.txt');
+  $pdf->ChapterBody($con);
+  $pdf->CheckBoxes($con);
 
   $pdf->SetFont('Arial','',5);  
   $pdf->Output();
