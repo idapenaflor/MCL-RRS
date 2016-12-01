@@ -20,7 +20,7 @@
                       </a>
                     </li>
                     <li>
-                      <a href="">
+                      <a href="schedule.php">
                         <i class="fa fa-calendar"></i> <span title="Schedule">Schedule</span>
                       </a>
                     </li>
