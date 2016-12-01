@@ -13,22 +13,29 @@
               <li class="header" style="color: #fff;font-size: 14px;">MAIN NAVIGATION
               </li>
               <li role="separator" class="divider"></li>
-                  <li>
-                    <a href="changepass.php">
-                      <i class="fa fa-cogs"></i> <span title="Profile Setting">Account Setting</span>
-                    </a>
-                  </li>
-                  <?php if($type == "Staff"): ?>
+                <?php if($type == "OITS"): ?>
                     <li>
-                    <a href="viewRequestedRooms.php">
-                      <i class="glyphicon glyphicon-list-alt"></i> <span title="My Request/s">My Request/s</span>
-                    </a>
-                  </li>
+                      <a href="signup.php">
+                        <i class="fa fa-user-plus"></i> <span title="Register Account">Register Account</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a href="">
+                        <i class="fa fa-calendar"></i> <span title="Schedule">Schedule</span>
+                      </a>
+                    </li>
+                <?php endif; ?>
+                <?php if($type == "Staff"): ?>
                     <li>
                       <a href="main.php">
                         <i class="fa fa-search"></i> <span title="Available Room/s">Available Room/s</span>
                       </a>
                     </li>
+                    <li>
+                    <a href="viewRequestedRooms.php">
+                      <i class="glyphicon glyphicon-list-alt"></i> <span title="My Request/s">My Request/s</span>
+                    </a>
+                  </li>
                   <?php endif; ?>
                   <?php if($type == "Dean" || $type == "CDMO" || $type == "LMO"): ?>
                     <li>
@@ -37,6 +44,7 @@
                       </a>
                     </li>
                   <?php endif; ?>
+
                   <?php if($type == "CDMO" || $type == "LMO"): ?>
                     <li>
                       <a href="viewInventory.php">
@@ -49,13 +57,14 @@
                       </a>
                     </li>
                   <?php endif; ?>
-                  <?php if($type == "OITS"): ?>
-                    <li>
-                      <a href="signup.php">
-                        <i class="fa fa-user-plus"></i> <span title="Register Account">Register Account</span>
-                      </a>
-                    </li>
-                  <?php endif; ?>
+
+                  <li>
+                    <a href="changepass.php">
+                      <i class="fa fa-cogs"></i> <span title="Profile Setting">Account Setting</span>
+                    </a>
+                  </li>
+                  
+                  
             </ul>
   </section>
 </aside>
