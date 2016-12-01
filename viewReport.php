@@ -84,7 +84,7 @@
                         <option <?= $month=="09" ? 'selected' : '' ?> value="09">September</option>
                         <option <?= $month=="10" ? 'selected' : '' ?> value="10">October</option>
                         <option <?= $month=="11" ? 'selected' : '' ?> value="11">November</option>
-                        <option <?= $month=="12" ? 'selected' : '' ?>value="12">December</option>
+                        <option <?= $month=="12" ? 'selected' : '' ?> value="12">December</option>
                       </select>
                       <select class="combo" name="year" id="year" required="required">
                         <option value="2016">2016</option>
