@@ -56,48 +56,55 @@ require('connects.php');
 if (isset($_POST['btnLogin']))
 {
 	$username = $_POST['txtUser'];
-	$password = md5($_POST['txtPass']);
+	//$password = md5($_POST['txtPass']);
+	$password = $_POST['txtPass'];
 	$type = "";
 	$dept = "";
 
-	$query = "SELECT * FROM account WHERE id = '$username' AND password = '$password'";
+	//$query = "SELECT * FROM account WHERE id = '$username' AND password = '$password'";
+	$query = "SELECT * FROM account WHERE id = '$username'";
 	$result = mysqli_query($con,$query);
 
 	while($row = mysqli_fetch_array($result))
           {
+          	$pass = $row['password'];
              $type = $row['type'];
              $dept = $row['dept'];
 
+             $pass = htmlspecialchars($row['password'],ENT_QUOTES);
              $type = htmlspecialchars($row['type'],ENT_QUOTES);
              $dept = htmlspecialchars($row['dept'],ENT_QUOTES);
           }
 
-    session_start();
-	$_SESSION['id'] = $username;
-	$_SESSION['password'] = $password;
-	$_SESSION['type'] = $type;
-	$_SESSION['dept'] = $dept;
+     if(password_verify($password, $pass))
+     {
+	    session_start();
+		$_SESSION['id'] = $username;
+		$_SESSION['password'] = $pass;
+		$_SESSION['type'] = $type;
+		$_SESSION['dept'] = $dept;
 
-    if($type=="Dean" || $type=="CDMO" || $type=="LMO"){
-    	//echo "<script type='text/javascript'> alert ('Hello Dean');</script>";
-    	header("location:dv-main.php");
-    }
-    else if($type=="Staff"){
-    	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
-    	header("location:main.php");
-    }
-    else if($type=="OITS")
-    {
-    	header("location:signup.php");
-    }
-    else if(!$row = mysqli_fetch_assoc($result)){
+	    if($type=="Dean" || $type=="CDMO" || $type=="LMO"){
+	    	//echo "<script type='text/javascript'> alert ('Hello Dean');</script>";
+	    	header("location:dv-main.php");
+	    }
+	    else if($type=="Staff"){
+	    	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
+	    	header("location:main.php");
+	    }
+	    else if($type=="OITS")
+	    {
+	    	header("location:signup.php");
+	    }
+	  }
+    else{
     	session_destroy();
 	 	echo "<script type='text/javascript'> alert ('Incorrect username and/or password.');</script>";
     }
 	
 }//end of if isset
 else{
-	
+	session_destroy();
 }
 
 	mysqli_close($con);

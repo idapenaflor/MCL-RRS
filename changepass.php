@@ -71,25 +71,42 @@
 <?php
     if(isset($_POST['btnChange']))
     {
-      $oTPass = md5($_POST['txtOPass']);
-      $nPass = md5($_POST['txtNPass']);
-      $cnPass = md5($_POST['txtCPass']);
+      $oTPass = $_POST['txtOPass']; //TExtfield
+      $nPass = $_POST['txtNPass'];
+      $cnPass = $_POST['txtCPass'];
       $username = $_SESSION['id'];
-      $oPass = $_SESSION['password'];
 
-          if($nPass==$cnPass && $nPass!=$oPass && $oTPass==$oPass)
+      $oldPass = password_hash($oTPass, PASSWORD_BCRYPT, array('cost' => 12));
+      $newPass = password_hash($nPass, PASSWORD_BCRYPT, array('cost' => 12));
+      $CnPass = password_hash($cnPass, PASSWORD_BCRYPT, array('cost' => 12));
+
+      $query = "SELECT * FROM account WHERE id = '$username'";
+     $result = mysqli_query($con,$query);
+
+  while($row = mysqli_fetch_array($result))
           {
-            $result2 = mysqli_query($con,"UPDATE account set password='$nPass' where id='$username' AND password='$oPass'");
+            $pass = $row['password'];
+
+             $pass = htmlspecialchars($row['password'],ENT_QUOTES);
+          }
+
+      if(password_verify($oTPass, $pass) && $nPass==$cnPass && $oTPass!=$nPass)
+     {
+        $result2 = mysqli_query($con,"UPDATE account set password='$newPass' where id='$username'");
 
             echo "<script type='text/javascript'> alert ('Password Successfully Changed');</script>";
             echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
-          }
-          else if($nPass==$oTPass)
-          {
-            echo "<script type='text/javascript'> alert ('Incorrect Password');</script>";
-          }
-          else{
-             echo "<script type='text/javascript'> alert ('Password does not match');</script>";
-          }
+     }
+     else if($newPass==$pass)
+     {
+      echo "<script type='text/javascript'> alert ('Incorrect Password');</script>";
+     }
+     else if($oTPass==$nPass)
+     {
+        echo "<script type='text/javascript'> alert ('Password should not be the same with new password');</script>";
+     }
+     else{
+        echo "<script type='text/javascript'> alert ('Password does not match');</script>";
+     }
     }
 ?>

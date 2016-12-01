@@ -103,22 +103,23 @@
 				$pass = md5($_POST['txtPass']);
 				$cpass = md5($_POST['txtCPass']);
 
+
 				if($pass==$cpass)
 				{
 					$username = $_POST['txtUser'];
-					$password = md5($_POST['txtPass']);
+					$password = $_POST['txtPass'];
 					$utype = $_POST['uType'];
 					$fname = $_POST['txtFName'];
 					$lname = $_POST['txtLName'];
 					$mname = $_POST['txtMName'];
 					$department = $_POST['Dept'];
 
-
+					$StorePass = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
 					$result = mysqli_query($con,"SELECT * FROM account WHERE id = '$username'");
 
 					if(!$row = mysqli_fetch_assoc($result))
 					{
-						$sql1="INSERT INTO account VALUES('$username','$password', '$utype', '$fname', '$lname', '$mname', '$department')";
+						$sql1="INSERT INTO account VALUES('$username','$StorePass', '$utype', '$fname', '$lname', '$mname', '$department')";
 
 						if (!mysqli_query($con,$sql1))
 						{
