@@ -104,7 +104,7 @@ if (isset($_POST['btnLogin']))
 	
 }//end of if isset
 else{
-	session_destroy();
+	//session_destroy();
 }
 
 	mysqli_close($con);
