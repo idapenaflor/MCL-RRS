@@ -127,7 +127,7 @@
 						}
 						//TURN IT BACK TO LOGIN PAGE
 				        echo "<script language='javascript'>alert('Sign up successful! Redirecting you back to log in page.');</script>";
-				        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
+				        echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=signup.php\">";
 					}
 					else
 					{
