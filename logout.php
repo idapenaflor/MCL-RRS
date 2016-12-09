@@ -20,6 +20,6 @@ if (ini_get("session.use_cookies")) {
 session_unset();
 session_destroy();
 echo "<script type='text/javascript'> alert ('Logout Successful');</script>";
-header("location:login.php");
+header("location:index.php");
 //echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
 ?>

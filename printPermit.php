@@ -678,7 +678,7 @@ else if($type=="Dean" || $type=="CDMO" || $type=="LMO")
 }
 else
 {
-  header("location:login.php");
+  header("location:index.php");
 }
 
 ?>

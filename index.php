@@ -30,7 +30,7 @@
 			</div><!--end of offset-->
 			<center>
 				<div class="panel" id="login">
-						<form action="login.php" method="post">
+						<form action="index.php" method="post">
 							<div class="input-group">
 							  <input type="text" class="form-control" placeholder="Username" name="txtUser" required="required" style="margin-top: 8px;height: 45px;" /> <br/><br/>
 							  <input type="password" class="form-control" placeholder="Password" name="txtPass" required="required" style="margin-top: 8px;height: 45px;"/>

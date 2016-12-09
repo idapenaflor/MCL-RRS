@@ -38,7 +38,7 @@
                 <li><a href="signup.php"><i class="fa fa-dashboard"></i> Home</a></li>
               <?php endif; ?>
               <?php if($type == ""): ?>
-                <li><a href="login.php"><i class="fa fa-dashboard"></i> Home</a></li>
+                <li><a href="index.php"><i class="fa fa-dashboard"></i> Home</a></li>
               <?php endif; ?>
 
                 <li class="active">Account Setting</li>
@@ -95,7 +95,7 @@
         $result2 = mysqli_query($con,"UPDATE account set password='$newPass' where id='$username'");
 
             echo "<script type='text/javascript'> alert ('Password Successfully Changed');</script>";
-            echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=login.php\">";
+            echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=index.php\">";
      }
      else if($newPass==$pass)
      {

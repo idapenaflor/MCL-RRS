@@ -28,7 +28,7 @@
       else
       {
         session_destroy();
-         header("location:login.php");
+         header("location:index.php");
       }
         //mysqli_close($con);
 ?>
