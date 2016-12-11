@@ -2,12 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content-="width=device-width initial-scale=1">
+    <meta name="viewport" content-="width=device-width, initial-scale=1">
     <title>MCL Room Reservation</title>
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-theme.min.css">
-
+    <?php include("includes.php"); ?> 
   </head>
 
   <body>
@@ -51,23 +48,23 @@
   </body>
 </html>
 <?php
-require('connects.php');
+	require('connects.php');
+	include_once('qConn.php');
 
 if (isset($_POST['btnLogin']))
 {
 	$username = $_POST['txtUser'];
 	//$password = md5($_POST['txtPass']);
 	$password = $_POST['txtPass'];
-	$type = "";
-	$dept = "";
+	$type="";
+	$dept="";
 
-	//$query = "SELECT * FROM account WHERE id = '$username' AND password = '$password'";
-	$query = "SELECT * FROM account WHERE id = '$username'";
-	$result = mysqli_query($con,$query);
+	$result = SelectUser($con,$username);  
 
-	while($row = mysqli_fetch_array($result))
+
+		while($row = mysqli_fetch_array($result))
           {
-          	$pass = $row['password'];
+          	 $pass = $row['password'];
              $type = $row['type'];
              $dept = $row['dept'];
 
@@ -76,31 +73,31 @@ if (isset($_POST['btnLogin']))
              $dept = htmlspecialchars($row['dept'],ENT_QUOTES);
           }
 
-     if(password_verify($password, $pass))
-     {
-	    session_start();
-		$_SESSION['id'] = $username;
-		$_SESSION['password'] = $pass;
-		$_SESSION['type'] = $type;
-		$_SESSION['dept'] = $dept;
+         if(password_verify($password, $pass))
+	     {
+		    session_start();
+			$_SESSION['id'] = $username;
+			$_SESSION['password'] = $pass;
+			$_SESSION['type'] = $type;
+			$_SESSION['dept'] = $dept;
 
-	    if($type=="Dean" || $type=="CDMO" || $type=="LMO"){
-	    	//echo "<script type='text/javascript'> alert ('Hello Dean');</script>";
-	    	header("location:dv-main.php");
-	    }
-	    else if($type=="Staff"){
-	    	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
-	    	header("location:main.php");
-	    }
-	    else if($type=="OITS")
-	    {
-	    	header("location:signup.php");
-	    }
-	  }
-    else{
-    	session_destroy();
-	 	echo "<script type='text/javascript'> alert ('Incorrect username and/or password.');</script>";
-    }
+		    if($type=="Dean" || $type=="CDMO" || $type=="LMO"){
+		    	//echo "<script type='text/javascript'> alert ('Hello Dean');</script>";
+		    	header("location:dv-main.php");
+		    }
+		    else if($type=="Staff"){
+		    	//echo "<script type='text/javascript'> alert ('Hello Staff');</script>";
+		    	header("location:main.php");
+		    }
+		    else if($type=="OITS")
+		    {
+		    	header("location:signup.php");
+		    }
+		  }
+	    else{
+	    	//session_destroy();
+		 	echo "<script type='text/javascript'> alert ('Incorrect username and/or password.');</script>";
+    	}  
 	
 }//end of if isset
 else{
