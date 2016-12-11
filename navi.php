@@ -1,5 +1,6 @@
 <?php require('connects.php');
 include_once('log-auth.php');
+include_once('qConn.php');
 ?>
 <!--=========NAVIGATION==========-->
 <nav class="navbar navbar-static-top">

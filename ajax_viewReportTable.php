@@ -11,6 +11,7 @@
   </thead>
 <?php
   include('connects.php');
+  include('qConn.php');
   
   $output = '';
   $month = $_POST['month'];
@@ -25,28 +26,7 @@
   $arrayStatus = array();
   $arrayPurpose = array();
 
-      if($department == 'All')
-      {
-        if($type == 'LMO')
-        {
-          $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfUse like '$month%'");
-        }
-        else
-        {
-          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfUse like '$month%'");
-        }
-      }
-      else
-      {
-        if($type == 'LMO')
-        {
-          $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfUse like '$month%' and requests.dept='$department'");
-        }
-        else
-        {
-          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfUse like '$month%' and dept='$department'");
-        }
-      }
+      $getRequests = CheckIfAdmin($con,$department,$type,$month);
 
         if(mysqli_num_rows($getRequests) > 0)
         {
@@ -75,7 +55,8 @@
             $arrayQty = array();
 
             $equip = '';
-            $query = mysqli_query($con,"select * from equipmentrequest where requestID='$arrayID[$ctr]'");
+
+            $query = EquipRequest($con,$arrayID[$ctr]);
 
             if(mysqli_num_rows($query)>0)
             {
@@ -114,17 +95,4 @@
       echo $output;
   ?>
 
-  <script>
-    $(function () {
-      $("#example1").DataTable();
-      $('#example2').DataTable({
-        "paging": true,
-        "lengthChange": false,
-        "searching": false,
-        "ordering": true,
-        "info": true,
-        "autoWidth": false
-      });
-    });
-
-</script>
+<script src="./js/dataTable.js"></script>

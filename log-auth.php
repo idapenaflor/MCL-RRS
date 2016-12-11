@@ -1,14 +1,18 @@
  <?php
     include('connects.php');
+    include_once('qConn.php');
+
+    //$queries = new qConn();
+
     session_start();
       if (isset($_SESSION['id']))
       {
         $username = $_SESSION['id'];
         $type = $_SESSION['type'];
         $dept = $_SESSION['dept'];
+        //$result = "";
 
-        $query = "SELECT * FROM account where id = $username";
-        $result = mysqli_query($con,$query);
+        $result = SelectUser($con,$username);
 
           while($row = mysqli_fetch_array($result))
           {
@@ -23,7 +27,6 @@
              $lname = htmlspecialchars($row['lname'],ENT_QUOTES);
              $dept = htmlspecialchars($row['dept'],ENT_QUOTES);
           }
-
       }
       else
       {

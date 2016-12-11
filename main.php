@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <meta name="viewport" content-="width=device-width, initial-scale=1">
+    <!-- <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> -->
     <title>MCL Room Reservation</title>
     <?php include('includes.php'); ?>
   </head>
@@ -53,7 +54,7 @@
                               <div class="input-group-addon">
                                 <i class="fa fa-calendar"></i>
                               </div>
-                              <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:20px;" required="required"/>
+                              <input type="text" name='datetimepicker' id="datetimepicker" style="font-size:18px;" required="required"/>
                             </div>
                           </div>
                           <span style="font-size:12pt;">Time of Use:

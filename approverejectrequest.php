@@ -1,5 +1,7 @@
 <?php 
 require('connects.php');
+include('qConn.php');
+
 session_start();
     $username = "";
     if (isset($_SESSION['id']))
@@ -35,9 +37,8 @@ session_start();
             {
                 $action = 'Endorsed';
 
-                mysqli_query($con,"UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
-
-                $getlmo = mysqli_query($con,"select lmoAction from action where requestID='$requestID'");
+                
+                UpdateIfApproved($con,$action,$actioncol,$requestID,$datecol,$currentdate);
 
                 if(mysqli_num_rows($getlmo) > 0)
                 {
@@ -48,28 +49,13 @@ session_start();
                 }  
 
                 //QUERY TO INSERT THE REQUEST TO THE NOTIFICATION TABLE
-                if($getlmoaction == 'N/A')
-                {
-                    $notif = "INSERT into notification values ('$requestID', 'cdmo', '0')";
-                    if (!mysqli_query($con,$notif))
-                    {
-                        die('Error: ' . mysqli_error());
-                    }
-                }
-                else
-                {
-                    $notif = "INSERT into notification values ('$requestID', 'lmo', '0')";
-                    if (!mysqli_query($con,$notif))
-                    {
-                        die('Error: ' . mysqli_error());
-                    }
-                }
+                InsertRequest($con,$getlmoaction,$requestID);
                 
             }
         }
         else if($type=='CDMO')
         {
-            $notif = "INSERT into notification values ('$requestID', 'staff', '0')";
+            $notif = NotifInsert($con,$requestID);
                 if (!mysqli_query($con,$notif))
                 {
                     die('Error: ' . mysqli_error());

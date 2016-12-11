@@ -1,5 +1,6 @@
 <?php
 	require('connects.php');
+    include('qConn.php');
 	session_start();
 
 	$arrayID[] = array();
@@ -7,18 +8,7 @@
     $userid = $_SESSION['id'];
     $dept = $_SESSION['dept'];
 
-    if($type=='Dean')
-    {
-	   $getNotifs = mysqli_query($con,"select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.dept='$dept'");
-    }
-    else if($type=='Staff')
-    {
-        $getNotifs = mysqli_query($con,"select * from notification join requests on notification.requestID=requests.requestID where notification.isNotified='0' and notification.account='$type' and requests.requesterID='$userid'");
-    }
-    else
-    {
-        $getNotifs = mysqli_query($con,"select * from notification where isNotified='0' and account='$type'");
-    }
+    $getNotifs = GetNotif($con,$type,$dept,$userid);
 
 	if(mysqli_num_rows($getNotifs) > 0)
     {
@@ -28,6 +18,7 @@
         }
     }
 
+    //NEED TO HASH THIS
     $dataNotif['countid'] = count(array_filter($arrayID));
     $dataNotif['account'] = $type;
     $dataNotif['userid'] = $userid;

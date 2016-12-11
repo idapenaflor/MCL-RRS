@@ -55,19 +55,9 @@
                       <form method="post">
                         <?php
                         include('connects.php');
+                        include('qConn.php');
 
-                          if($type == 'Dean')
-                          {
-                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Pending' and requests.dept='$dept' and requests.isExpired=0");
-                          }
-                          else if($type == 'LMO')
-                          {
-                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.lmoAction='Pending' and requests.isExpired=0");
-                          }
-                          else if($type == 'CDMO')
-                          {
-                            $getrequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='N/A' or requests.status='Pending' and action.deanAction='Endorsed' and action.cdmoAction='Pending' and action.lmoAction='Approved' and requests.isExpired=0");
-                          }
+                          $getrequests = CheckAdmin($con,$type,$dept);
 
                           if(mysqli_num_rows($getrequests) > 0)
                           {
@@ -107,7 +97,8 @@
 
                           for($ctr=0; $ctr<count($arrayRequester); $ctr++)
                           {
-                            $getnames = mysqli_query($con,"select * from account join requests on account.id=requests.requesterID where requests.requesterID='$arrayRequester[$ctr]'");
+                            $getnames = GetNames($con,$arrayRequester[$ctr]);
+
                             if(mysqli_num_rows($getnames) > 0)
                             {
                                 while($row = mysqli_fetch_array($getnames))
@@ -158,13 +149,6 @@
       <?php include ('footer.php');?>
     </footer>
   </div><!--end of wrapper-->
-  
-  <!--==========JAVASCRIPT=======-->
-   <!--  <script src="./js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="./js/jquery.datetimepicker.full.js"></script>
-    <script src="./js/app.min.js"></script>
-    <script src="./js/searchroom.js"></script> -->
 
  </body>
 </html>

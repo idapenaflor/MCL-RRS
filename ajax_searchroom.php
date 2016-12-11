@@ -8,6 +8,7 @@
 </thead>
   <?php
   include('connects.php');
+  include('qConn.php');
 
   $rtype = $_POST['rtype'];
 
@@ -56,16 +57,7 @@
     else
     {
       //GET ALL ROOMS OF SAME TYPE
-      if($rtype == "all")
-      {
-        $qAGet = "select * from roomtable";
-       $getRooms = mysqli_query($con,$qAGet); 
-      }
-      else
-      {
-        $qGetRooms = "select * from roomtable where rtype = '$rtype'";
-       $getRooms = mysqli_query($con,$qGetRooms); 
-      }
+      $getRooms = GetRooms($con,$rtype);
 
       if(mysqli_num_rows($getRooms) > 0)
       {
@@ -81,8 +73,7 @@
 
       for($ctrFrom1 = $from ; $ctrFrom1 < $to ; $ctrFrom1++)
       {
-         $qGetStat = "select scheduletable.rStatus from scheduletable join roomtable on scheduletable.rid = roomtable.rid where roomtable.rroom = '$arrayRoom[$roomCtr]' and scheduletable.tID = '$ctrFrom1' and scheduletable.rday = '$day'";
-         $getStatusQuery = mysqli_query($con,$qGetStat);
+         $getStatusQuery = GetRStat($con,$arrayRoom[$roomCtr],$ctrFrom1,$day);
 
         if(mysqli_num_rows($getStatusQuery) > 0)
         {
@@ -103,8 +94,7 @@
       }
     }
 
-    $qGetRequest = "select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'";
-    $getRequestFromSameDate = mysqli_query($con,$qGetRequest);
+    $getRequestFromSameDate = GetRequestSameDate($con,$date);
 
     if(mysqli_num_rows($getRequestFromSameDate) > 0)
     {
@@ -128,8 +118,7 @@
 
     for($ctr=0; $ctr<count($arrayFinalRoom); $ctr++)
     {
-      $qGetType = "select rType from roomtable where rRoom='$arrayFinalRoom[$ctr]'";
-      $getType = mysqli_query($con,$qGetType);
+      $getType = GetRoomTable($con,$arrayFinalRoom[$ctr]);
 
       if(mysqli_num_rows($getType) > 0)
       {
@@ -157,57 +146,6 @@
       }
           echo "</tbody>";
     }
-  }
-
-  //FUNCTIONS HERE
-  function GetFromTime($con,$from) //get start time
-  {
-
-    //$qGetFrom = "select tTime from timetable where tid = '$from'";
-    $getFromTime = mysqli_query($con,"select tTime from timetable where tid = '$from'");
-
-    if(mysqli_num_rows($getFromTime)>0)
-    {
-      while($row = mysqli_fetch_array($getFromTime))
-      {
-        $fromTime = $row['tTime'];
-      } 
-    }
-
-    return $fromTime;
-  }
-
-  function GetToTime($con,$to) //get end time
-  {
-    $toTime = "";
-    $qGetTo = "select tTime from timetable where tid = '$to'";
-    $getToTime = mysqli_query($con,$qGetTo);
-
-    if(mysqli_num_rows($getToTime)>0)
-    {
-      while($row = mysqli_fetch_array($getToTime))
-      {
-        $toTime = $row['tTime'];
-      }
-    }
-
-    return $toTime;
-  }
-
-  function ConvertToTid($con,$time)
-  {
-    $qGetID = "select tID from timetable where tTime = '$time'";
-    $getTid = mysqli_query($con,$qGetID);
-
-    if(mysqli_num_rows($getTid)>0)
-    {
-      while($row = mysqli_fetch_array($getTid))
-      {
-        $time = $row['tID'];
-      }
-    }
-
-    return $time;
   }
 
   ?>

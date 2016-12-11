@@ -200,9 +200,9 @@
           </section>
     </div>
   <!--==========FOOTER========-->
-    <!-- <footer class="main-footer">
+    <footer class="main-footer">
       <?php include ('footer.php');?>
-    </footer> -->
+    </footer> 
   </div><!--end of wrapper-->
  </body>
 </html>

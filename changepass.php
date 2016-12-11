@@ -11,7 +11,6 @@
   <body class="hold-transition sidebar-mini">
      <?php
       require('connects.php');
-      include('log-auth.php');
     ?>
   <div class="wrapper">
     <header class="main-header">
@@ -69,6 +68,9 @@
  </body>
 </html>
 <?php
+  include('qConn.php');
+  include_once('log-auth.php');
+
     if(isset($_POST['btnChange']))
     {
       $oTPass = $_POST['txtOPass']; //TExtfield
@@ -80,8 +82,7 @@
       $newPass = password_hash($nPass, PASSWORD_BCRYPT, array('cost' => 12));
       $CnPass = password_hash($cnPass, PASSWORD_BCRYPT, array('cost' => 12));
 
-      $query = "SELECT * FROM account WHERE id = '$username'";
-     $result = mysqli_query($con,$query);
+      $result = SelectUser($con,$username);
 
   while($row = mysqli_fetch_array($result))
           {
@@ -92,7 +93,7 @@
 
       if(password_verify($oTPass, $pass) && $nPass==$cnPass && $oTPass!=$nPass)
      {
-        $result2 = mysqli_query($con,"UPDATE account set password='$newPass' where id='$username'");
+        $result2 = UpdatePass($con,$newPass,$username);
 
             echo "<script type='text/javascript'> alert ('Password Successfully Changed');</script>";
             echo "<META HTTP-EQUIV=\"Refresh\" CONTENT=\"1; URL=index.php\">";
