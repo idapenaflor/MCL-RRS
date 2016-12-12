@@ -1,5 +1,7 @@
 <?php
 	require('connects.php');
+	include('qConn.php');
+
 	session_start();
 
 	if (isset($_SESSION['id']))
@@ -11,8 +13,8 @@
   		date_default_timezone_set('Singapore');
 	    $currentdate = date('m/d/Y H:i:s');
 
-		$sql1 = "INSERT into equipment (ename, edept, qty, onhand, modified, created) values ('$ename', '$type', '$qty', '$qty', '$currentdate', '$currentdate')";
-
+		
+	    $sql1 = InsertNewEquip($con,$ename,$type,$qty,$qty,$currentdate,$currentdate);
 		if (!mysqli_query($con,$sql1))
 		{
 			die('Error: ' . mysqli_error());

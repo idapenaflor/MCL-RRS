@@ -1,5 +1,7 @@
 <?php 
 include('connects.php');
+include('qConn.php');
+
 session_start();
 
 	$username = "";
@@ -17,9 +19,7 @@ session_start();
     	echo $username;
     	echo $remarks;
 
-    	mysqli_query($con,"UPDATE requests set status='Cancelled' where requesterID='$username' and requestID='$requestID'");
-
-    	$sql1 = "INSERT into remarks (requestID, type, remarks, rdate) values ('$requestID', 'Cancelled', '$remarks', '$currentdate')";
+    	$sql1 = CancelledRequest($con,$username,$requestID,$remarks,$currentdate);
 
 		if (!mysqli_query($con,$sql1))
 		{

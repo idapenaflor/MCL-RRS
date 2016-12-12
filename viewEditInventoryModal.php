@@ -1,5 +1,6 @@
 <?php
 	require('connects.php');
+	include('qConn.php');
 
 	$equipID = $_GET['equipID'];
 	$output = '';
@@ -10,7 +11,7 @@
 	$modified = '';
 
 
-	$getEquipment = mysqli_query($con,"select * from equipment where eid='$equipID'");
+	$getEquipment = EditInventory($con,$equipID);	
 	
 	if(mysqli_num_rows($getEquipment) > 0)
 	{

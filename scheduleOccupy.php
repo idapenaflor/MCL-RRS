@@ -1,5 +1,6 @@
 <?php
 	include('connects.php');
+  include('qConn.php');
 	$roomName = $_POST['room'];
 
 	echo $roomName;
@@ -29,7 +30,7 @@
     {
     	for($ctr2=0; $ctr2<count($arrayTime); $ctr2++)
 	    {
-	    	mysqli_query($con, "UPDATE scheduletable set rStatus='Occupied' where rID='$roomName' and rDay='$arrayDay[$ctr]' and tID='$arrayTime[$ctr2]'");
+	    	SchedOccupy($con,$roomName,$arrayDay[$ctr],$arrayTime[$ctr2]);
 	    }	
     }
     header("location:schedule.php");

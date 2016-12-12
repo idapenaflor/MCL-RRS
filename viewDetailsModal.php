@@ -2,6 +2,7 @@
 <?php
 	require('connects.php');
 	include('log-auth.php');
+	include('qConn.php');
 
 	$name = $fname . ' ' . $lname;
 
@@ -29,7 +30,7 @@
 	$lmoStyle = '';
 	$req_status = '';
 
-	$query1 = mysqli_query($con,"select * from requests where requestID='$requestID'");
+	$query1 = ViewRequestDetails($con,$requestID);
 
 	if(mysqli_num_rows($query1)>0)
 	{
@@ -45,7 +46,7 @@
 		} 
 	}
 
-	$query = mysqli_query($con,"select * from action where requestID='$requestID'");
+	$query = ViewActionDetails($con,$requestID);
 
 	if(mysqli_num_rows($query)>0)
 	{
@@ -57,11 +58,10 @@
 		  $deanDate = $row['deanDate'];
 		  $cdmoDate = $row['cdmoDate'];
 		  $lmoDate = $row['lmoDate'];
-		  //$remarks = $row['remarks'];
 		} 
 	}
 
-	$query = mysqli_query($con,"select * from remarks where requestID='$requestID'");
+	$query = ViewRequestDetailsRemarks($con,$requestID);
 
 	if(mysqli_num_rows($query)>0)
 	{

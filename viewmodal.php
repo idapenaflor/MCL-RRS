@@ -6,6 +6,7 @@
 	if(isset($_POST['rroom']))
 	{
 		require('connects.php');
+		include('qConn.php');
 
 		$output = '';
 
@@ -30,8 +31,7 @@
 	    $finalId = array();
 
 		//GET ALL EQUIPMENT AND QTY
-		$qGetAll = "select * from equipment";
-		$query = mysqli_query($con,$qGetAll);
+		$query = ViewAllEquip($con);
 
 		if(mysqli_num_rows($query)>0)
 	    {
@@ -43,7 +43,7 @@
 	    }
 
 	    //GET REQUESTS ID OF REQUEST WITH SIMILAR DATE OF USE
-	    $queryGetSimilarRequest = mysqli_query($con,"select * from requests where dateOfUse='$date' and status='Approved' or dateOfUse='$date' and status='Pending'");
+	    $queryGetSimilarRequest = SelectSimilarRequest($con,$date);
 
 		if(mysqli_num_rows($queryGetSimilarRequest)>0)
 	    {
@@ -75,7 +75,7 @@
 	    {
 	    	for($ctr2=0; $ctr2<count($arrayEquipments); $ctr2++)
 	    	{
-	    		$query = mysqli_query($con,"select * from equipmentrequest where requestID='$finalId[$ctr]' and ename='$arrayEquipments[$ctr2]'");
+	    		$query = SelectEquipRequest($con,$finalId[$ctr],$arrayEquipments[$ctr2]);
 
 		    	if(mysqli_num_rows($query)>0)
 			    {
@@ -165,53 +165,6 @@
 ?>
 </form>
 
-<!-- DINAGDAG NI IDA 11/04, ALISIN NA UNG FUNCTIONS FROM AJAX_SEARCHROOM-->
-<?php
-	//FUNCTIONS HERE
-  function GetFromTime($con,$from) //get start time
-  {
-    $getFromTime = mysqli_query($con,"select tTime from timetable where tid = '$from'");
-
-    if(mysqli_num_rows($getFromTime)>0)
-    {
-      while($row = mysqli_fetch_array($getFromTime))
-      {
-        $fromTime = $row['tTime'];
-      } 
-    }
-
-    return $fromTime;
-  }
-
-  function GetToTime($con,$to) //get end time
-  {
-    $toTime = "";
-    $getToTime = mysqli_query($con,"select tTime from timetable where tid = '$to'");
-    if(mysqli_num_rows($getToTime)>0)
-    {
-      while($row = mysqli_fetch_array($getToTime))
-      {
-        $toTime = $row['tTime'];
-      }
-    }
-
-    return $toTime;
-  }
-
-  function ConvertToTid($con,$time)
-  {
-    $getTid = mysqli_query($con,"select tID from timetable where tTime = '$time'");
-    if(mysqli_num_rows($getTid)>0)
-    {
-      while($row = mysqli_fetch_array($getTid))
-      {
-        $time = $row['tID'];
-      }
-    }
-
-    return $time;
-  }
-?>
 
 <script type="text/javascript">
 	$('.check-equipment').click(function()

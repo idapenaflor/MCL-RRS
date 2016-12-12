@@ -12,6 +12,7 @@
      <?php
       include('connects.php');
       include('log-auth.php');
+      include('qConn.php');
 
       $arrayID = array();
       $arrayDept = array();
@@ -28,22 +29,13 @@
       $output = '';
       $month = date('m');
 
-      if($type == 'LMO')
-      {
-        $getRequests = mysqli_query($con,"select * from requests join action on requests.requestID=action.requestID where action.lmoAction!='N/A' and requests.status='Approved' and requests.dateOfUse like '$month%'");
-      }
-      else
-      {
-          $getRequests = mysqli_query($con,"select * from requests where status='Approved' and dateOfUse like '$month%'");
-      }
+      $getRequests = SelectRequestsForReport($con,$type,$month);
 
     ?>
     <div class="wrapper">
     <header class="main-header">
       <?php include ('header.php');?>
-      <?php include ('navi.php');?>
-
-      
+      <?php include ('navi.php');?>    
 
     </header>
   <!--==========SIDE BAR===========-->
@@ -152,7 +144,7 @@
                               $arrayEquipments = array();
                               $arrayQty = array();
                               $equip = '';
-                              $query = mysqli_query($con,"select * from equipmentrequest where requestID='$arrayID[$ctr]'");
+                              $query = EquipRequest($con,$arrayID[$ctr]);
 
                               if(mysqli_num_rows($query)>0)
                               {

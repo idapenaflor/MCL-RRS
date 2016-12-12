@@ -1,5 +1,6 @@
 <?php 
 require('connects.php');
+include('log-auth.php');
 include('qConn.php');
 
 session_start();
@@ -38,7 +39,7 @@ session_start();
                 $action = 'Endorsed';
 
                 
-                UpdateIfApproved($con,$action,$actioncol,$requestID,$datecol,$currentdate);
+                $getlmo = UpdateIfApproved($con,$action,$actioncol,$requestID,$datecol,$currentdate);
 
                 if(mysqli_num_rows($getlmo) > 0)
                 {
@@ -55,48 +56,18 @@ session_start();
         }
         else if($type=='CDMO')
         {
-            $notif = NotifInsert($con,$requestID);
-                if (!mysqli_query($con,$notif))
-                {
-                    die('Error: ' . mysqli_error());
-                }
+            NotifInsert($con,$requestID);
+               
         }
 
 
         if($action == 'Approved')
         {
-            if($type=='CDMO')
-            {
-               mysqli_query($con,"UPDATE requests set status='$action' where requestID='$requestID'");
-            }
-            else if($type=='LMO')
-            {
-                $notif = "INSERT into notification values ('$requestID', 'cdmo', '0')";
-                if (!mysqli_query($con,$notif))
-                {
-                    die('Error: ' . mysqli_error());
-                }
-            }
-            echo $requestID;
-            mysqli_query($con, "UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
+            ApprovedRequest($con,$type,$action,$requestID,$actioncol,$datecol,$currentdate);
         }
         else if($action == 'Rejected')
         {
-            mysqli_query($con,"UPDATE requests set status='$action' where requestID='$requestID'");
-            mysqli_query($con,"UPDATE action set $actioncol='$action', $datecol='$currentdate' where requestID='$requestID'");
-
-            $sql1 = "INSERT into remarks (requestID, type, remarks, rdate) values ('$requestID', '$action', '$remarks', '$currentdate')";
-
-            if (!mysqli_query($con,$sql1))
-            {
-                die('Error: ' . mysqli_error());
-            }
-
-            $notif = "INSERT into notification values ('$requestID', 'staff', '0')";
-            if (!mysqli_query($con,$notif))
-            {
-                die('Error: ' . mysqli_error());
-            }
+            RejectedRequest($con,$action,$requestID,$actioncol,$datecol,$currentdate,$remarks,$type);
         }
         
         //header('Location: http://localhost/mclrrs/dv-main.php');

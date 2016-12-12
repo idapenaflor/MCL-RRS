@@ -1,7 +1,8 @@
 <?php
 	require('connects.php');
+    include('log-auth.php');
     include('qConn.php');
-	session_start();
+	//session_start();
 
 	$arrayID[] = array();
 	$type = $_SESSION['type'];

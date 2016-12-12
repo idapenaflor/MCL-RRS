@@ -1,6 +1,7 @@
 <?php
   include('connects.php');
   include_once('log-auth.php');
+  include('qConn.php');
 
   $dateofuse = NULL;
   $from = NULL;
@@ -41,9 +42,9 @@
       $lmo = "N/A";
     }
 
-    $sql1 = "INSERT into requesttable (requesterID, collegedept, dateoffiling, purposeofactivity, dateofuse, timeFrom, timeTo, roomuse, dean, cdmo, lmo, isNotified) values ('$username', '$dept', '$currentdate', '$purpose', '$dateofuse', '$from', '$to', '$room', '$dean', '$cdmo', '$lmo', '0')";
+    $sql1 = InsertRequestedRoom($con,$username,$dept,$currentdate,$purpose,$dateofuse,$from,$to,$room,$dean,$cdmo,$lmo)
 
-    if (!mysql_query($sql1, $con))
+    if (!mysql_query($con,$sql1))
     {
       die('Error: ' . mysql_error());
     }

@@ -1,10 +1,12 @@
 <?php
 	include('connects.php');
+	include('log-auth.php');
+	include('qConn.php');
 
 	$day = "";
 	$room = array();
 
-	$query1 = mysqli_query($con,"select rID from roomtable");
+	$query1 = SelectRoomID($con);
 
 	if(mysqli_num_rows($query1) > 0)
     {
@@ -30,7 +32,7 @@
 		 {
 			 for ($z = 0 ; $z < count($room) ; $z++)
 			 {
-				 $sql1="insert into scheduletable values ('$y','$day','$room[$z]','Vacant')";
+				 $sql1=SchedValues($con,$y,$day,$room[$z]);
 
 				if (!mysqli_query($con,$sql1))
 				{

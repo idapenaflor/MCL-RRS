@@ -2,6 +2,7 @@
   require("plugins/fpdf/fpdf.php");
   require("connects.php");
   require("log-auth.php");
+  include('qConn.php');
 
   function decryptor($string)
   {
@@ -166,19 +167,19 @@ class PDF extends FPDF
 
 
     //GET DEAN NAME
-    $query1 = mysqli_query($con, "select * from account where type='dean' and dept='$dept'");
+    $query1 = GetDeanName($con,$dept);
     if(mysqli_num_rows($query1)>0)
     { while($row = mysqli_fetch_array($query1))
       { $deanName = $row['fname'] . ' ' . $row['lname']; } 
     }
 
-    $query2 = mysqli_query($con, "select * from account where type='cdmo'");
+    $query2 = SelectCDMO($con);
     if(mysqli_num_rows($query2)>0)
     { while($row = mysqli_fetch_array($query2))
       { $cdmoName = $row['fname'] . ' ' . $row['lname']; } 
     }    
 
-    $query4 = mysqli_query($con, "select * from action where requestID='$id'");
+    $query4 = SelectAction($con,$id);
     if(mysqli_num_rows($query4)>0)
     { while($row = mysqli_fetch_array($query4))
       { $deanDate = $row['deanDate'];
@@ -189,7 +190,7 @@ class PDF extends FPDF
 
     if($lmoName != 'N/A')
     {
-      $query3 = mysqli_query($con, "select * from account where type='lmo'");
+      $query3 = SelectLMO($con);
       if(mysqli_num_rows($query3)>0)
       { while($row = mysqli_fetch_array($query3))
         { $lmoName = $row['fname'] . ' ' . $row['lname']; } 
@@ -335,7 +336,7 @@ class PDF extends FPDF
     $labOthers = '';
     $roomType = '';
 
-    $query1 = mysqli_query($con, "select rType from roomtable where rRoom='$room'");
+    $query1 = SelectRoomType($con,$room);
     if(mysqli_num_rows($query1)>0)
     { while($row = mysqli_fetch_array($query1))
       { $rtype = $row['rType']; } 
@@ -528,7 +529,7 @@ class PDF extends FPDF
     $arrayOthers = array();
     $arrayOthersQty = array();
 
-    $query1 = mysqli_query($con, "select * from equipmentrequest where requestID='$id'");
+    $query1 = SelectShowEquip($con,$id);
     if(mysqli_num_rows($query1)>0)
     { while($row = mysqli_fetch_array($query1))
       { $arrayEquipment[] = $row['ename'];
@@ -627,7 +628,7 @@ class PDF extends FPDF
     $lmoOther = '';
     for($ctr=0; $ctr<count($arrayOthers); $ctr++)
     {
-        $query1 = mysqli_query($con, "select edept from equipment where ename='$arrayOthers[$ctr]'");
+        $query1 = SelectEquipToDisplay($con,$arrayOthers[$ctr]);
         if(mysqli_num_rows($query1)>0)
         { while($row = mysqli_fetch_array($query1))
           {

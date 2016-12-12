@@ -43,10 +43,12 @@
                             <span>Facility Name</span>
                               <select id='room' name='room'>
                                 <?php
+                                  include('qConn.php');
+                                  
                                   $arrayID = array();
                                   $arrayRoom = array();
-                                  $query1 = mysqli_query($con,"select * from roomtable");
-
+                                  
+                                  $query1 = SelectRooms($con);
                                   if(mysqli_num_rows($query1) > 0)
                                   {
                                       while($row = mysqli_fetch_array($query1))

@@ -1,5 +1,6 @@
 <?php
   include('connects.php');
+  include('qConn.php');
 
   $arrayEquipments = array();
   $arrayQty = array();
@@ -7,7 +8,7 @@
 
   $requestID = $_POST['requestID'];
 
-  $query = mysqli_query($con,"select * from equipmentrequest where requestID='$requestID'");
+  $query = ViewEquipment($con,$requestID);
 
   if(mysqli_num_rows($query)>0)
   {

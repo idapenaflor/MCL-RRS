@@ -1,6 +1,7 @@
 <?php
 	require("connects.php");
 	require("log-auth.php");
+	
 	if($type=="OITS"){
 
 	}
@@ -97,6 +98,7 @@
 	<?php
 
 		require('connects.php');
+		include('qConn.php');
 
 			if (isset($_POST['btnSubmit']))
 			{					
@@ -115,11 +117,11 @@
 					$department = $_POST['Dept'];
 
 					$StorePass = password_hash($password, PASSWORD_BCRYPT, array('cost' => 12));
-					$result = mysqli_query($con,"SELECT * FROM account WHERE id = '$username'");
+					$result = SelectUser($con,$username);
 
 					if(!$row = mysqli_fetch_assoc($result))
 					{
-						$sql1="INSERT INTO account VALUES('$username','$StorePass', '$utype', '$fname', '$lname', '$mname', '$department')";
+						$sql1 = InsertNewAccount($con,$username,$StorePass,$utype,$fname,$lname,$mname,$department);
 
 						if (!mysqli_query($con,$sql1))
 						{

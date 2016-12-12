@@ -1,6 +1,7 @@
 <?php
 	include('connects.php');
-	
+	include('qConn.php');
+
 	$id = $_POST['id'];
 	$ename = $_POST['ename'];
 	$qty = $_POST['qty'];
@@ -11,7 +12,8 @@
 
 	echo $currentdate;
 	echo $onhand;
-	mysqli_query($con,"UPDATE equipment set ename='$ename', qty='$qty', onhand='$onhand', modified='$currentdate' where eid='$id'");
+	
+	UpdateEquipmentDetails($con,$ename,$qty,$onhand,$currentdate,$id);
 	//header('Location: http://localhost/mclrrs/viewInventory.php');
 	header("location:viewInventory.php");
 ?>

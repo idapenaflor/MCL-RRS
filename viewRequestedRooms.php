@@ -54,6 +54,8 @@
                         </thead>
 
                         <?php
+                          include('qConn.php');
+
                           $username = "";
                           $output = '';
                           $arrayID = array();
@@ -63,8 +65,8 @@
                             $username = $_SESSION['id'];
                           }
 
-                            $getRequests = mysqli_query($con,"select * from requests where requesterID='$username'");
-
+                            
+                              $getRequests = GetAllUserRequest($con,$username);
                               if(mysqli_num_rows($getRequests) > 0)
                               {
                                 while($row = mysqli_fetch_array($getRequests))
@@ -150,15 +152,6 @@
         <?php include ('footer.php');?>
       </footer>
   </div><!--end of wrapper-->
-  
-  <!--==========JAVASCRIPT=======-->
-    <!-- <script src="./js/jquery.datetimepicker.full.js"></script>
-    <script src="./js/jquery-2.2.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-    <script src="./js/app.min.js"></script>
-    <script src="./js/modal-requested-room.js"></script>
-    <script src="./js/dataTable.js"></script> -->
-
  
  </body>
 </html>

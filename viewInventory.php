@@ -60,11 +60,12 @@
                       </thead>
 
                       <?php
+                        include('qConn.php');
 
                         $output = '';
                         $arrayID = array();
 
-                        $getEquipment = mysqli_query($con,"select * from equipment where edept='$type'");
+                        $getEquipment = ViewEquipPerType($con,$type);                        
                         if(mysqli_num_rows($getEquipment) > 0)
                         {
                             while($row = mysqli_fetch_array($getEquipment))
